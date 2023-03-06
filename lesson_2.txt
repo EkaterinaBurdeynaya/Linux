@@ -1,0 +1,331 @@
+Создать каталоги students и mentors в домашней директории, а в них — текстовые файлы students_list.txt и mentors_list.txt соответственно.
+Открыть созданные в п.1 файлы в любом текстовом редакторе и заполнить их (в соответствии с названием) списком Ваших одногруппников и наставников на данном потоке.
+Переместите файл mentors_list.txt в папку students.
+Удалите папку mentors.
+Переименуйте папку students в students_and_mentors.
+Удалите папку students_and_mentors вместе с содержимым.
+Подключитесь к машине с Linux по протоколу SSH.
+(*) Используя дополнительный материал, настроить авторизацию по SSH с использованием ключей.
+
+student@Ubuntu-MySQL-VirtualBox:~$ pwd
+/home/student
+student@Ubuntu-MySQL-VirtualBox:~$ mkdir students
+student@Ubuntu-MySQL-VirtualBox:~$ ll
+итого 188
+drwxr-xr-x 26 student student 4096 май 10 22:42 ./
+drwxr-xr-x  4 root    root    4096 май 10 17:56 ../
+drwxrwxr-x  3 student student 4096 май 10 22:02 10/
+-rw-------  1 student student 1417 май  9 20:53 .bash_history
+-rw-r--r--  1 student student  220 апр 22  2019 .bash_logout
+-rw-r--r--  1 student student 3771 апр 22  2019 .bashrc
+drwx------ 16 student student 4096 май 10 22:35 .cache/
+drwx------ 16 student student 4096 май 10 22:10 .config/
+drwxrwxr-x  4 student student 4096 апр 22  2019 .dbeaver4/
+drwxrwxr-x  3 student student 4096 апр 22  2019 .dbeaver-drivers/
+drwx------  3 student student 4096 май  9 19:20 .dbus/
+drwxrwxr-x  4 student student 4096 апр 22  2019 .eclipse/
+-rw-r--r--  1 student student 8980 апр 22  2019 examples.desktop
+drwx------  2 student student 4096 апр 22  2019 .gconf/
+drwx------  3 student student 4096 май  9 20:54 .gnupg/
+-rw-------  1 student student 3088 май  9 20:54 .ICEauthority
+-rw-------  1 student student   49 май 10 22:16 .lesshst
+drwxrwxr-x  3 student student 4096 май 10 22:05 lesson1/
+drwx------  3 student student 4096 апр 22  2019 .local/
+-rw-rw-r--  1 student student   16 май 10 22:23 logs.txt
+-rw-rw-r--  1 student student 3513 май 10 22:38 mciri_poem.txt
+drwx------  5 student student 4096 апр 22  2019 .mozilla/
+drwx------  3 student student 4096 апр 22  2019 .mysql/
+-rw-------  1 student student   92 апр 22  2019 .mysql_history
+drwxrwxr-x  2 student student 4096 апр 22  2019 .nano/
+-rw-r--r--  1 student student  655 апр 22  2019 .profile
+-rw-rw-r--  1 student student   66 апр 22  2019 .selected_editor
+drwxrwxr-x  2 student student 4096 май 10 22:42 students/
+-rw-r--r--  1 student student    0 апр 22  2019 .sudo_as_admin_successful
+drwxrwxr-x  2 student student 4096 апр 22  2019 .swt/
+-rw-r-----  1 student student    5 май  9 20:54 .vboxclient-clipboard.pid
+-rw-r-----  1 student student    5 май  9 20:54 .vboxclient-display-svga-x11.pid
+-rw-r-----  1 student student    5 май  9 20:54 .vboxclient-draganddrop.pid
+-rw-r-----  1 student student    5 май  9 20:54 .vboxclient-seamless.pid
+-rw-------  1 student student 1890 май 10 22:38 .viminfo
+-rw-------  1 student student  137 май 10 17:30 .Xauthority
+-rw-------  1 student student  111 май  9 20:54 .xsession-errors
+-rw-------  1 student student 2188 май  9 20:53 .xsession-errors.old
+drwxr-xr-x  2 student student 4096 апр 22  2019 Видео/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Документы/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Загрузки/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Изображения/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Музыка/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Общедоступные/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Рабочий стол/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Шаблоны/
+student@Ubuntu-MySQL-VirtualBox:~$ ls
+10                logs.txt        Видео      Изображения    Рабочий стол
+examples.desktop  mciri_poem.txt  Документы  Музыка         Шаблоны
+lesson1           students        Загрузки   Общедоступные
+student@Ubuntu-MySQL-VirtualBox:~$ mkdir mentors
+student@Ubuntu-MySQL-VirtualBox:~$ ll
+итого 192
+drwxr-xr-x 27 student student 4096 май 10 22:43 ./
+drwxr-xr-x  4 root    root    4096 май 10 17:56 ../
+drwxrwxr-x  3 student student 4096 май 10 22:02 10/
+-rw-------  1 student student 1417 май  9 20:53 .bash_history
+-rw-r--r--  1 student student  220 апр 22  2019 .bash_logout
+-rw-r--r--  1 student student 3771 апр 22  2019 .bashrc
+drwx------ 16 student student 4096 май 10 22:35 .cache/
+drwx------ 16 student student 4096 май 10 22:10 .config/
+drwxrwxr-x  4 student student 4096 апр 22  2019 .dbeaver4/
+drwxrwxr-x  3 student student 4096 апр 22  2019 .dbeaver-drivers/
+drwx------  3 student student 4096 май  9 19:20 .dbus/
+drwxrwxr-x  4 student student 4096 апр 22  2019 .eclipse/
+-rw-r--r--  1 student student 8980 апр 22  2019 examples.desktop
+drwx------  2 student student 4096 апр 22  2019 .gconf/
+drwx------  3 student student 4096 май  9 20:54 .gnupg/
+-rw-------  1 student student 3088 май  9 20:54 .ICEauthority
+-rw-------  1 student student   49 май 10 22:16 .lesshst
+drwxrwxr-x  3 student student 4096 май 10 22:05 lesson1/
+drwx------  3 student student 4096 апр 22  2019 .local/
+-rw-rw-r--  1 student student   16 май 10 22:23 logs.txt
+-rw-rw-r--  1 student student 3513 май 10 22:38 mciri_poem.txt
+drwxrwxr-x  2 student student 4096 май 10 22:43 mentors/
+drwx------  5 student student 4096 апр 22  2019 .mozilla/
+drwx------  3 student student 4096 апр 22  2019 .mysql/
+-rw-------  1 student student   92 апр 22  2019 .mysql_history
+drwxrwxr-x  2 student student 4096 апр 22  2019 .nano/
+-rw-r--r--  1 student student  655 апр 22  2019 .profile
+-rw-rw-r--  1 student student   66 апр 22  2019 .selected_editor
+drwxrwxr-x  2 student student 4096 май 10 22:42 students/
+-rw-r--r--  1 student student    0 апр 22  2019 .sudo_as_admin_successful
+drwxrwxr-x  2 student student 4096 апр 22  2019 .swt/
+-rw-r-----  1 student student    5 май  9 20:54 .vboxclient-clipboard.pid
+-rw-r-----  1 student student    5 май  9 20:54 .vboxclient-display-svga-x11.pid
+-rw-r-----  1 student student    5 май  9 20:54 .vboxclient-draganddrop.pid
+-rw-r-----  1 student student    5 май  9 20:54 .vboxclient-seamless.pid
+-rw-------  1 student student 1890 май 10 22:38 .viminfo
+-rw-------  1 student student  137 май 10 17:30 .Xauthority
+-rw-------  1 student student  111 май  9 20:54 .xsession-errors
+-rw-------  1 student student 2188 май  9 20:53 .xsession-errors.old
+drwxr-xr-x  2 student student 4096 апр 22  2019 Видео/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Документы/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Загрузки/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Изображения/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Музыка/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Общедоступные/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Рабочий стол/
+drwxr-xr-x  2 student student 4096 апр 22  2019 Шаблоны/
+student@Ubuntu-MySQL-VirtualBox:~$ ls
+10                logs.txt        students   Загрузки     Общедоступные
+examples.desktop  mciri_poem.txt  Видео      Изображения  Рабочий стол
+lesson1           mentors         Документы  Музыка       Шаблоны
+student@Ubuntu-MySQL-VirtualBox:~$ cd students/
+student@Ubuntu-MySQL-VirtualBox:~/students$ echo students_list.txt
+students_list.txt
+student@Ubuntu-MySQL-VirtualBox:~/students$ cd -
+/home/student
+student@Ubuntu-MySQL-VirtualBox:~$ cd mentors/
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ echo mentors_list.txt
+mentors_list.txt
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ nano mentors_list.txt
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ cd -
+/home/student
+student@Ubuntu-MySQL-VirtualBox:~$ cd students/
+student@Ubuntu-MySQL-VirtualBox:~/students$ nano studets_list.txt
+student@Ubuntu-MySQL-VirtualBox:~/students$ cd -
+/home/student
+student@Ubuntu-MySQL-VirtualBox:~$ cd mentors/
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ tree
+.
+└── mentors_list.txt
+
+0 directories, 1 file
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ mv mentors_list.txt students/
+mv: невозможно переместить 'mentors_list.txt' в 'students/': Это не каталог
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ mv mentors_list.txt ../ students
+mv: указанная цель 'students' не является каталогом
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ mv mentors_list.txt ../ students/
+mv: указанная цель 'students/' не является каталогом
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ cd -
+/home/student
+student@Ubuntu-MySQL-VirtualBox:~$ mv mentors_list.txt ../ students
+mv: не удалось выполнить stat для 'mentors_list.txt': Нет такого файла или каталога
+mv: невозможно переместить '../' в 'students/..': Устройство или ресурс занято
+student@Ubuntu-MySQL-VirtualBox:~$ cd mentors/
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ ls
+mentors_list.txt
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ mv mentors_list.txt ../students
+student@Ubuntu-MySQL-VirtualBox:~/mentors$ cd -
+/home/student
+student@Ubuntu-MySQL-VirtualBox:~$ tree
+.
+├── 10
+│   ├── 20
+│   │   └── 30
+│   └── file3
+├── examples.desktop
+├── lesson1
+│   ├── 10
+│   │   ├── 20
+│   │   │   └── 30
+│   │   └── file3
+│   └── newfile2
+├── logs.txt
+├── mciri_poem.txt
+├── mentors
+├── students
+│   ├── mentors_list.txt
+│   └── studets_list.txt
+├── Видео
+├── Документы
+├── Загрузки
+├── Изображения
+├── Музыка
+├── Общедоступные
+├── Рабочий стол
+└── Шаблоны
+
+17 directories, 8 files
+student@Ubuntu-MySQL-VirtualBox:~$ rm -r students_and_mentors
+rm: невозможно удалить 'students_and_mentors': Нет такого файла или каталога
+student@Ubuntu-MySQL-VirtualBox:~$ rm -r students mentors
+student@Ubuntu-MySQL-VirtualBox:~$ tree
+.
+├── 10
+│   ├── 20
+│   │   └── 30
+│   └── file3
+├── examples.desktop
+├── lesson1
+│   ├── 10
+│   │   ├── 20
+│   │   │   └── 30
+│   │   └── file3
+│   └── newfile2
+├── logs.txt
+├── mciri_poem.txt
+├── Видео
+├── Документы
+├── Загрузки
+├── Изображения
+├── Музыка
+├── Общедоступные
+├── Рабочий стол
+└── Шаблоны
+
+15 directories, 6 files
+student@Ubuntu-MySQL-VirtualBox:~$ 
+student@Ubuntu-MySQL-VirtualBox:~$ sudo systemctl enable ssh
+[sudo] пароль для student: 
+Synchronizing state of ssh.service with SysV init with /lib/systemd/systemd-sysv-install...
+Executing /lib/systemd/systemd-sysv-install enable ssh
+student@Ubuntu-MySQL-VirtualBox:~$ sudo systemctl start ssh
+student@Ubuntu-MySQL-VirtualBox:~$ sudo systemctl status ssh
+● ssh.service - OpenBSD Secure Shell server
+   Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enab
+   Active: active (running) since Вс 2021-05-09 20:19:53 MSK; 1 day 2h ago
+ Main PID: 781 (sshd)
+   CGroup: /system.slice/ssh.service
+           └─781 /usr/sbin/sshd -D
+
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox systemd[1]: Reloading OpenBSD Secure She
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox sshd[781]: Received SIGHUP; restarting.
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox systemd[1]: Reloaded OpenBSD Secure Shel
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox sshd[781]: Server listening on 0.0.0.0 p
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox sshd[781]: Server listening on :: port 2
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4906]: Accepted password for studen
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4906]: pam_unix(sshd:session): sess
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4908]: Accepted password for studen
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4908]: pam_unix(sshd:session): sess
+май 10 22:56:37 Ubuntu-MySQL-VirtualBox systemd[1]: Started OpenBSD Secure Shell
+lines 1-17/17 (END)...skipping...
+● ssh.service - OpenBSD Secure Shell server
+   Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+   Active: active (running) since Вс 2021-05-09 20:19:53 MSK; 1 day 2h ago
+ Main PID: 781 (sshd)
+   CGroup: /system.slice/ssh.service
+           └─781 /usr/sbin/sshd -D
+
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox systemd[1]: Reloading OpenBSD Secure Shell server.
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox sshd[781]: Received SIGHUP; restarting.
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox systemd[1]: Reloaded OpenBSD Secure Shell server.
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox sshd[781]: Server listening on 0.0.0.0 port 22.
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox sshd[781]: Server listening on :: port 22.
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4906]: Accepted password for student from fe80::d129:1f8b:3adc
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4906]: pam_unix(sshd:session): session opened for user student
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4908]: Accepted password for student from 192.168.1.65 port 49
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4908]: pam_unix(sshd:session): session opened for user student
+май 10 22:56:37 Ubuntu-MySQL-VirtualBox systemd[1]: Started OpenBSD Secure Shell server.
+~
+~
+~
+~
+~
+~
+~
+~
+~
+student@Ubuntu-MySQL-VirtualBox:~$ sudo systemctl status ssh
+● ssh.service - OpenBSD Secure Shell server
+   Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+   Active: active (running) since Вс 2021-05-09 20:19:53 MSK; 1 day 2h ago
+ Main PID: 781 (sshd)
+   CGroup: /system.slice/ssh.service
+           └─781 /usr/sbin/sshd -D
+
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox systemd[1]: Reloading OpenBSD Secure Shell server.
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox sshd[781]: Received SIGHUP; restarting.
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox systemd[1]: Reloaded OpenBSD Secure Shell server.
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox sshd[781]: Server listening on 0.0.0.0 port 22.
+май 10 17:25:29 Ubuntu-MySQL-VirtualBox sshd[781]: Server listening on :: port 22.
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4906]: Accepted password for student from fe80::d129:1f8b:3adc
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4906]: pam_unix(sshd:session): session opened for user student
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4908]: Accepted password for student from 192.168.1.65 port 49
+май 10 17:30:10 Ubuntu-MySQL-VirtualBox sshd[4908]: pam_unix(sshd:session): session opened for user student
+май 10 22:56:37 Ubuntu-MySQL-VirtualBox systemd[1]: Started OpenBSD Secure Shell server.
+student@Ubuntu-MySQL-VirtualBox:~$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:73:27:a8 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.57/24 brd 192.168.1.255 scope global dynamic enp0s3
+       valid_lft 17588sec preferred_lft 17588sec
+    inet6 fe80::6f3b:940f:2721:eb9b/64 scope link 
+       valid_lft forever preferred_lft forever
+student@Ubuntu-MySQL-VirtualBox:~$ hostname
+Ubuntu-MySQL-VirtualBox
+student@Ubuntu-MySQL-VirtualBox:~$ 
+
+student@Ubuntu-MySQL-VirtualBox's password:
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                 ∙ MobaXterm Personal Edition v21.1 ∙                 │
+    │               (SSH client, X server and network tools)               │
+    │                                                                      │
+    │ ➤ SSH session to student@Ubuntu-MySQL-VirtualBox.local               │
+    │   ∙ Direct SSH      :  ✔                                             │
+    │   ∙ SSH compression :  ✔                                             │
+    │   ∙ SSH-browser     :  ✔                                             │
+    │   ∙ X11-forwarding  :  ✔  (remote display is forwarded through SSH)  │
+    │                                                                      │
+    │ ➤ For more info, ctrl+click on help or visit our website.            │
+    └──────────────────────────────────────────────────────────────────────┘
+
+Welcome to Ubuntu 16.04.7 LTS (GNU/Linux 4.15.0-142-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+UA Infra: Extended Security Maintenance (ESM) is not enabled.
+
+Enable UA Infra: ESM to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo ua status
+
+New release '18.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+Last login: Mon May 10 17:30:27 2021 from fe80::d129:1f8b:3adc:8d4b%enp0s3
+student@Ubuntu-MySQL-VirtualBox:~$ hostname -I
+192.168.1.57
+
