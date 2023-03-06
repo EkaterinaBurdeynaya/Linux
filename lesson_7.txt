@@ -1,0 +1,249 @@
+1. Подключить репозиторий с nginx любым удобным способом, установить nginx и потом удалить nginx, используя утилиту dpkg.
+2. Установить пакет на свой выбор, используя snap.
+3. Настроить iptables: разрешить подключения только на 22-й и 80-й порты.
+4. * Настроить проброс портов локально с порта 80 на порт 8080.
+
+student@Ubuntu-MySQL-VirtualBox:~$ snap list
+No snaps are installed yet. Try 'snap install hello-world'.
+student@Ubuntu-MySQL-VirtualBox:~$ clear
+student@Ubuntu-MySQL-VirtualBox:~$ apt-add-repository ppa:nginx/stable
+Ошибка: необходимо запускать с правами администратора
+student@Ubuntu-MySQL-VirtualBox:~$ sudo apt-add-repository ppa:nginx/stable
+[sudo] пароль для student: 
+ This PPA contains the latest Stable Release version of the nginx web server software.
+
+**Only Non-End-of-Life Ubuntu Releases are supported in this PPA**
+
+**Development releases of Ubuntu are not officially supported by this PPA, and uploads for those will not be available until actual final releases for those versions**
+ Больше информации: https://launchpad.net/~nginx/+archive/ubuntu/stable
+Нажмите [ENTER] чтобы продолжить или Ctrl-C для отмены добавления
+
+gpg: создана таблица ключей `/tmp/tmp5st4v_dw/secring.gpg'
+gpg: создана таблица ключей `/tmp/tmp5st4v_dw/pubring.gpg'
+gpg: запрашиваю ключ C300EE8C с сервера hkp keyserver.ubuntu.com
+gpg: /tmp/tmp5st4v_dw/trustdb.gpg: создана таблица доверия
+gpg: ключ C300EE8C: импортирован открытый ключ "Launchpad Stable"
+gpg: не найдено абсолютно доверенных ключей
+gpg: Всего обработано: 1
+gpg:               импортировано: 1  (RSA: 1)
+OK
+student@Ubuntu-MySQL-VirtualBox:~$ cat /etc/apt/sources.list.d/nginx-ubuntu-stable-focal.list
+cat: /etc/apt/sources.list.d/nginx-ubuntu-stable-focal.list: Нет такого файла или каталога
+student@Ubuntu-MySQL-VirtualBox:~$ cd /etc/apt/sources.list.d/
+student@Ubuntu-MySQL-VirtualBox:/etc/apt/sources.list.d$ ll
+итого 48
+drwxr-xr-x 2 root root 4096 окт  9 14:59 ./
+drwxr-xr-x 7 root root 4096 июл 19 14:30 ../
+-rw-r--r-- 1 root root   41 окт  9 14:59 dbeaver.list
+-rw-r--r-- 1 root root   41 окт  9 14:59 dbeaver.list.save
+-rw-r--r-- 1 root root  140 окт  9 14:59 linuxuprising-ubuntu-java-xenial.list
+-rw-r--r-- 1 root root  140 окт  9 14:59 linuxuprising-ubuntu-java-xenial.list.save
+-rw-r--r-- 1 root root  128 окт  9 14:59 nginx-ubuntu-stable-xenial.list
+-rw-r--r-- 1 root root  128 окт  9 14:59 nginx-ubuntu-stable-xenial.list.save
+-rw-r--r-- 1 root root  315 окт  9 14:59 ubuntu-esm-infra.list
+-rw-r--r-- 1 root root  315 окт  9 14:59 ubuntu-esm-infra.list.save
+-rw-r--r-- 1 root root  136 окт  9 14:59 webupd8team-ubuntu-java-xenial.list
+-rw-r--r-- 1 root root  136 окт  9 14:59 webupd8team-ubuntu-java-xenial.list.save
+student@Ubuntu-MySQL-VirtualBox:/etc/apt/sources.list.d$ sudo apt install nginx
+Чтение списков пакетов… Готово
+Построение дерева зависимостей       
+Чтение информации о состоянии… Готово
+Следующие пакеты устанавливались автоматически и больше не требуются:
+  libevent-core-2.0-5 linux-headers-4.15.0-45 linux-headers-4.15.0-45-generic
+  linux-image-4.15.0-45-generic linux-modules-4.15.0-45-generic
+  linux-modules-extra-4.15.0-45-generic snapd-login-service
+Для их удаления используйте «sudo apt autoremove».
+Будут установлены следующие дополнительные пакеты:
+  libnginx-mod-http-auth-pam libnginx-mod-http-dav-ext libnginx-mod-http-echo
+  libnginx-mod-http-geoip libnginx-mod-http-image-filter
+  libnginx-mod-http-subs-filter libnginx-mod-http-upstream-fair
+  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream
+  nginx-common nginx-full
+Предлагаемые пакеты:
+  fcgiwrap nginx-doc
+Следующие пакеты будут УДАЛЕНЫ:
+  nginx-core
+Следующие НОВЫЕ пакеты будут установлены:
+  libnginx-mod-http-auth-pam libnginx-mod-http-dav-ext libnginx-mod-http-echo
+  libnginx-mod-http-geoip libnginx-mod-http-image-filter
+  libnginx-mod-http-subs-filter libnginx-mod-http-upstream-fair
+  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream nginx
+  nginx-full
+Следующие пакеты будут обновлены:
+  nginx-common
+Обновлено 1 пакетов, установлено 12 новых пакетов, для удаления отмечено 1 пакетов, и 0 пакетов не обновлено.
+Необходимо скачать 935 kB архивов.
+После данной операции объём занятого дискового пространства возрастёт на 1 008 kB.
+Хотите продолжить? [Д/н] y
+Пол:1 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 nginx-common all 1.16.1-0+xenial1 [57,1 kB]
+Пол:2 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 libnginx-mod-http-auth-pam amd64 1.16.1-0+xenial1 [29,6 kB]
+Пол:3 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 libnginx-mod-http-dav-ext amd64 1.16.1-0+xenial1 [31,3 kB]
+Пол:4 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 libnginx-mod-http-echo amd64 1.16.1-0+xenial1 [41,0 kB]
+Пол:5 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 libnginx-mod-http-geoip amd64 1.16.1-0+xenial1 [30,8 kB]
+Пол:6 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 libnginx-mod-http-image-filter amd64 1.16.1-0+xenial1 [34,1 kB]
+Пол:7 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 libnginx-mod-http-subs-filter amd64 1.16.1-0+xenial1 [32,6 kB]
+Пол:8 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 libnginx-mod-http-upstream-fair amd64 1.16.1-0+xenial1 [32,8 kB]
+Пол:9 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 libnginx-mod-http-xslt-filter amd64 1.16.1-0+xenial1 [32,6 kB]
+Пол:10 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 libnginx-mod-mail amd64 1.16.1-0+xenial1 [61,3 kB]
+Пол:11 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 libnginx-mod-stream amd64 1.16.1-0+xenial1 [86,1 kB]
+Пол:12 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 nginx-full amd64 1.16.1-0+xenial1 [440 kB]
+Пол:13 http://ppa.launchpad.net/nginx/stable/ubuntu xenial/main amd64 nginx all 1.16.1-0+xenial1 [25,4 kB]
+Получено 935 kB за 2с (372 kB/s)
+Предварительная настройка пакетов ...
+(Чтение базы данных … на данный момент установлен 258161 файл и каталог.)
+Удаляется nginx-core (1.10.3-0ubuntu0.16.04.5) …
+(Чтение базы данных … на данный момент установлено 258157 файлов и каталогов.)
+Подготовка к распаковке …/nginx-common_1.16.1-0+xenial1_all.deb …
+Распаковывается nginx-common (1.16.1-0+xenial1) на замену (1.10.3-0ubuntu0.16.04.5) …
+Выбор ранее не выбранного пакета libnginx-mod-http-auth-pam.
+Подготовка к распаковке …/libnginx-mod-http-auth-pam_1.16.1-0+xenial1_amd64.deb …
+Распаковывается libnginx-mod-http-auth-pam (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета libnginx-mod-http-dav-ext.
+Подготовка к распаковке …/libnginx-mod-http-dav-ext_1.16.1-0+xenial1_amd64.deb …
+Распаковывается libnginx-mod-http-dav-ext (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета libnginx-mod-http-echo.
+Подготовка к распаковке …/libnginx-mod-http-echo_1.16.1-0+xenial1_amd64.deb …
+Распаковывается libnginx-mod-http-echo (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета libnginx-mod-http-geoip.
+Подготовка к распаковке …/libnginx-mod-http-geoip_1.16.1-0+xenial1_amd64.deb …
+Распаковывается libnginx-mod-http-geoip (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета libnginx-mod-http-image-filter.
+Подготовка к распаковке …/libnginx-mod-http-image-filter_1.16.1-0+xenial1_amd64.deb …
+Распаковывается libnginx-mod-http-image-filter (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета libnginx-mod-http-subs-filter.
+Подготовка к распаковке …/libnginx-mod-http-subs-filter_1.16.1-0+xenial1_amd64.deb …
+Распаковывается libnginx-mod-http-subs-filter (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета libnginx-mod-http-upstream-fair.
+Подготовка к распаковке …/libnginx-mod-http-upstream-fair_1.16.1-0+xenial1_amd64.deb …
+Распаковывается libnginx-mod-http-upstream-fair (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета libnginx-mod-http-xslt-filter.
+Подготовка к распаковке …/libnginx-mod-http-xslt-filter_1.16.1-0+xenial1_amd64.deb …
+Распаковывается libnginx-mod-http-xslt-filter (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета libnginx-mod-mail.
+Подготовка к распаковке …/libnginx-mod-mail_1.16.1-0+xenial1_amd64.deb …
+Распаковывается libnginx-mod-mail (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета libnginx-mod-stream.
+Подготовка к распаковке …/libnginx-mod-stream_1.16.1-0+xenial1_amd64.deb …
+Распаковывается libnginx-mod-stream (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета nginx-full.
+Подготовка к распаковке …/nginx-full_1.16.1-0+xenial1_amd64.deb …
+Распаковывается nginx-full (1.16.1-0+xenial1) …
+Выбор ранее не выбранного пакета nginx.
+Подготовка к распаковке …/nginx_1.16.1-0+xenial1_all.deb …
+Распаковывается nginx (1.16.1-0+xenial1) …
+Обрабатываются триггеры для ufw (0.35-0ubuntu2) …
+Обрабатываются триггеры для ureadahead (0.100.0-19.1) …
+Обрабатываются триггеры для systemd (229-4ubuntu21.31) …
+Обрабатываются триггеры для man-db (2.7.5-1) …
+Настраивается пакет nginx-common (1.16.1-0+xenial1) …
+Устанавливается новая версия файла настройки /etc/nginx/nginx.conf …
+Устанавливается новая версия файла настройки /etc/nginx/sites-available/default …
+Removing obsolete conffile /etc/init/nginx.conf ...
+Настраивается пакет libnginx-mod-http-auth-pam (1.16.1-0+xenial1) …
+Настраивается пакет libnginx-mod-http-dav-ext (1.16.1-0+xenial1) …
+Настраивается пакет libnginx-mod-http-echo (1.16.1-0+xenial1) …
+Настраивается пакет libnginx-mod-http-geoip (1.16.1-0+xenial1) …
+Настраивается пакет libnginx-mod-http-image-filter (1.16.1-0+xenial1) …
+Настраивается пакет libnginx-mod-http-subs-filter (1.16.1-0+xenial1) …
+Настраивается пакет libnginx-mod-http-upstream-fair (1.16.1-0+xenial1) …
+Настраивается пакет libnginx-mod-http-xslt-filter (1.16.1-0+xenial1) …
+Настраивается пакет libnginx-mod-mail (1.16.1-0+xenial1) …
+Настраивается пакет libnginx-mod-stream (1.16.1-0+xenial1) …
+Настраивается пакет nginx-full (1.16.1-0+xenial1) …
+Настраивается пакет nginx (1.16.1-0+xenial1) …
+student@Ubuntu-MySQL-VirtualBox:/etc/apt/sources.list.d$ nginx --help
+nginx: invalid option: "-"
+student@Ubuntu-MySQL-VirtualBox:/etc/apt/sources.list.d$ sudo apt remove nginx
+Чтение списков пакетов… Готово
+Построение дерева зависимостей       
+Чтение информации о состоянии… Готово
+Следующие пакеты устанавливались автоматически и больше не требуются:
+  libevent-core-2.0-5 libnginx-mod-http-auth-pam libnginx-mod-http-dav-ext
+  libnginx-mod-http-echo libnginx-mod-http-geoip
+  libnginx-mod-http-image-filter libnginx-mod-http-subs-filter
+  libnginx-mod-http-upstream-fair libnginx-mod-http-xslt-filter
+  libnginx-mod-mail libnginx-mod-stream linux-headers-4.15.0-45
+  linux-headers-4.15.0-45-generic linux-image-4.15.0-45-generic
+  linux-modules-4.15.0-45-generic linux-modules-extra-4.15.0-45-generic
+  nginx-common nginx-full snapd-login-service
+Для их удаления используйте «sudo apt autoremove».
+Следующие пакеты будут УДАЛЕНЫ:
+  nginx
+Обновлено 0 пакетов, установлено 0 новых пакетов, для удаления отмечено 1 пакетов, и 0 пакетов не обновлено.
+После данной операции объём занятого дискового пространства уменьшится на 37,9 kB.
+Хотите продолжить? [Д/н] y
+(Чтение базы данных … на данный момент установлено 258220 файлов и каталогов.)
+Удаляется nginx (1.16.1-0+xenial1) …
+student@Ubuntu-MySQL-VirtualBox:/etc/apt/sources.list.d$ cd~
+Команда 'cd~' не найдена, возможно вы имели в виду:
+ Команда 'cdp' из пакета 'irpas' (multiverse)
+ Команда 'cd5' из пакета 'cd5' (universe)
+ Команда 'cdo' из пакета 'cdo' (universe)
+ Команда 'cdi' из пакета 'cdo' (universe)
+ Команда 'cdb' из пакета 'tinycdb' (main)
+ Команда 'cdw' из пакета 'cdw' (universe)
+ Команда 'cdv' из пакета 'codeville' (universe)
+ Команда 'cde' из пакета 'cde' (universe)
+cd~: команда не найдена
+student@Ubuntu-MySQL-VirtualBox:/etc/apt/sources.list.d$ cd ~
+student@Ubuntu-MySQL-VirtualBox:~$ 
+student@Ubuntu-MySQL-VirtualBox:~$ snap list 
+No snaps are installed yet. Try 'snap install hello-world'.
+student@Ubuntu-MySQL-VirtualBox:~$ snap install zip
+error: snap "zip" not found
+student@Ubuntu-MySQL-VirtualBox:~$ snap find Opera
+Name                 Version       Publisher             Notes    Summary
+opera                80.0.4170.16  opera-software✓       -        Fast, secure, easy-to-use browser
+opera-beta           80.0.4170.11  opera-software✓       -        Fast and secure web browser
+opera-developer      81.0.4196.0   opera-software✓       -        Fast and secure web browser
+opera-proxy          1.2.2         snawoot               -        Standalone Opera VPN proxies client.
+rpncalc              2.6.2         michael-fross         -        RPNCalc is the Command Line Reverse Polish Notation (RPN) Style Calculator
+contasimple          3.1.0         enriverd              -        Contasimple Desktop
+office365webdesktop  0.6.0         rafgui012             -        It is a simple desktop application for Office365 of the web version for linux
+livepraise           0.0.2         thiagolucenasobrinho  -        Live Praise
+devoperator          1.7.1         art-hens-teeth        classic  DevOps tools
+student@Ubuntu-MySQL-VirtualBox:~$ snap install Opera
+error: cannot install "Opera": invalid instance name: invalid snap name:
+       "Opera"
+student@Ubuntu-MySQL-VirtualBox:~$ snap install opera
+2021-10-09T15:04:26+03:00 INFO Waiting for automatic snapd restart...
+opera 80.0.4170.16 from Opera (opera-software✓) installed
+student@Ubuntu-MySQL-VirtualBox:~$ 
+student@Ubuntu-MySQL-VirtualBox:~$ sudo iptables -P INPUT DROP
+student@Ubuntu-MySQL-VirtualBox:~$ sudo iptables -t filter -LChain INPUT (policy DROP)
+target     prot opt source               destination         
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+student@Ubuntu-MySQL-VirtualBox:~$ sudo iptables -A input -i eth0 -p tcp --dport 80 -j ACCEPT
+iptables: No chain/target/match by that name.
+student@Ubuntu-MySQL-VirtualBox:~$ sudo iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
+student@Ubuntu-MySQL-VirtualBox:~$ sudo iptables -A INPUT -i eth0 -p tcp --dport 20 -j ACCEPT
+student@Ubuntu-MySQL-VirtualBox:~$ sudo iptables -t filter -LChain INPUT (policy DROP)
+target     prot opt source               destination         
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:ftp-data
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+student@Ubuntu-MySQL-VirtualBox:~$
+student@Ubuntu-MySQL-VirtualBox:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+student@Ubuntu-MySQL-VirtualBox:~$ sudo iptables -t nat -LChain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+REDIRECT   tcp  --  anywhere             anywhere             tcp dpt:http redir ports 8080
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+student@Ubuntu-MySQL-VirtualBox:~$ 
