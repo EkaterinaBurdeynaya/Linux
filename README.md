@@ -1,2 +1,0 @@
-# Linux
- Курс Linux GB
