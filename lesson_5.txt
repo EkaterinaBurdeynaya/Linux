@@ -1,0 +1,366 @@
+1. Создать файл file1 и наполнить его произвольным содержимым. Скопировать его в file2. Создать символическую ссылку file3 на file1. Создать жёсткую ссылку file4 на file1. Посмотреть, какие inode у файлов. Удалить file1. Что стало с остальными созданными файлами? Попробовать вывести их на экран.
+2. Дать созданным файлам другие, произвольные имена. Создать новую символическую ссылку. Переместить ссылки в другую директорию.
+3. Создать два произвольных файла. Первому присвоить права на чтение и запись для владельца и группы, только на чтение — для всех. Второму присвоить права на чтение и запись только для владельца.
+4. Создать пользователя, обладающего возможностью выполнять действия от имени суперпользователя.
+5. * Создать группу developer и нескольких пользователей, входящих в неё. Создать директорию для совместной работы. Сделать так, чтобы созданные одними пользователями файлы могли изменять другие пользователи этой группы.
+6. * Создать в директории для совместной работы поддиректорию для обмена файлами, но чтобы удалять файлы могли только их создатели.
+7. * Создать директорию, в которой есть несколько файлов. Сделать так, чтобы открыть файлы можно было, только зная имя файла, а через ls список файлов посмотреть было нельзя.
+
+student@Ubuntu-MySQL-VirtualBox:~$ mkdir tasks
+student@Ubuntu-MySQL-VirtualBox:~$ cd tasks
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ clear
+
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ echo hello lesson 5 > file1
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ cp file1 file2
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll
+итого 16
+drwxrwxr-x  2 student student 4096 окт  5 20:32 ./
+drwxr-xr-x 24 student student 4096 окт  5 20:31 ../
+-rw-rw-r--  1 student student   15 окт  5 20:31 file1
+-rw-rw-r--  1 student student   15 окт  5 20:32 file2
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ln -s file1 file3
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll
+итого 16
+drwxrwxr-x  2 student student 4096 окт  5 20:33 ./
+drwxr-xr-x 24 student student 4096 окт  5 20:31 ../
+-rw-rw-r--  1 student student   15 окт  5 20:31 file1
+-rw-rw-r--  1 student student   15 окт  5 20:32 file2
+lrwxrwxrwx  1 student student    5 окт  5 20:33 file3 -> file1
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ln file1 file4
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll
+итого 20
+drwxrwxr-x  2 student student 4096 окт  5 20:34 ./
+drwxr-xr-x 24 student student 4096 окт  5 20:31 ../
+-rw-rw-r--  2 student student   15 окт  5 20:31 file1
+-rw-rw-r--  1 student student   15 окт  5 20:32 file2
+lrwxrwxrwx  1 student student    5 окт  5 20:33 file3 -> file1
+-rw-rw-r--  2 student student   15 окт  5 20:31 file4
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ls -l
+итого 12
+-rw-rw-r-- 2 student student 15 окт  5 20:31 file1
+-rw-rw-r-- 1 student student 15 окт  5 20:32 file2
+lrwxrwxrwx 1 student student  5 окт  5 20:33 file3 -> file1
+-rw-rw-r-- 2 student student 15 окт  5 20:31 file4
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ls --help
+Использование: ls [КЛЮЧ]… [ФАЙЛ]…
+Выдаёт информацию о ФАЙЛАХ (по умолчанию о текущем каталоге).
+Сортирует в алфавитном порядке, если не задан ни --sort, ни один из
+ключей -cftuvSUX.
+
+Аргументы, обязательные для длинных ключей, обязательны и для коротких.
+  -a, --all                  не скрывать файлы начинающиеся с .
+  -A, --almost-all           не выдавать подразумеваемые . и ..
+      --author               вместе с -l, печатать автора каждого файла
+  -b, --escape               печатать экранирующие последовательности
+                             в стиле С для не графических символов
+      --block-size=РАЗМЕР    использовать блоки указанного РАЗМЕРА; например,
+                             «---block-size=M» выводит размеры в единицах,
+                             равных 1048576 байтам; см. формат РАЗМЕРА далее.
+  -B, --ignore-backups       не выдавать файлы, оканчивающиеся на ~
+  -c                         с -lt: сортировать и показывать по ctime (времени
+                             последнего изменения файла);
+                             с -l: показывать ctime и сортировать по имени;
+                             иначе: сортировать по ctime, сначала самые новые
+  -C                         выдавать список в несколько колонок
+      --color[=КОГДА]        расцвечивать вывод;
+                             КОГДА может быть «always» (по умолчанию, если не
+                             указано), «auto» или «never». Подробней см. ниже
+  -d, --directory            выдавать имена каталогов, а не их содержимое
+  -D, --dired                генерировать вывод для режима Emacs dired
+  -f                         не сортировать, включает -aU, выключает -ls --color
+  -F, --classify             добавлять к имени файла индикатор (один из */=>@|)
+      --file-type            аналогично, но не добавлять «*»
+      --format=СЛОВО         across -x, commas -m, horizontal -x, long -l,
+                             single-column -1, verbose -l, vertical -C
+      --full-time            синоним -l --time-style=full-iso
+  -g                         как -l, но не выводить владельца
+      --group-directories-first
+                             группировать каталоги раньше файлов;
+                             может дополняться ключом --sort,
+                             но любое использование
+                             --sort=none (-U) выключает группировку
+  -G, --no-group             в длинном формате не печатать имена групп
+  -h, --human-readable       c -l и/или -s печатать размеры в удобном для
+                             человека виде (например, 1K 234M 2G)
+      --si                   то же, но использовать степень 1000, а не 1024
+  -H, --dereference-command-line
+                             следовать по символьным ссылкам в командной
+                             строке
+      --dereference-command-line-symlink-to-dir
+                             следовать по всем символьным ссылкам в командной
+                             строке, которые указывают на каталог
+      --hide=ШАБЛОН          не показывать записи, соответствующие ШАБЛОНУ
+                             оболочки (отменяется ключами -a или -A)
+      --indicator-style=СТИЛЬ добавлять к именам элементов индикатор с
+                             указанным СТИЛЕМ: none (по умолчанию),
+                             slash (-p), file-type (--file-type), classify (-F)
+  -i, --inode                показывать индекс каждого файла
+  -I, --ignore=ШАБЛОН        не показывать записи, соответствующие ШАБЛОНУ
+                             оболочки
+  -k, --kibibytes            по умолчанию использовать блоки по 1024 байта
+                             при показе использования диска
+  -l                         использовать широкий формат
+  -L, --dereference          показывая информацию для символьной ссылки,
+                             показывать информацию о файле, на который ссылка
+                             ссылается
+  -m                         выдавать список на всю ширину через запятую
+  -n, --numeric-uid-gid      как -l, но выдавать числовые UID и GID
+  -N, --literal              печатать имена как есть (не обрабатывать, 
+                             например, управляющие символы)
+  -o                         как -l, но не выводить информацию о группе
+  -p,  --indicator-style=slash  добавлять индикатор / к каталогам
+  -q, --hide-control-chars   выводить ? вместо непечатных символов
+      --show-control-chars   показывать непечатные символы (по умолчанию,
+                             если программа не «ls» и вывод не на терминал).
+  -Q, --quote-name           заключать имя записей в кавычки
+      --quoting-style=ТИП    использовать ТИП заключения в кавычки:
+                             literal, locale, shell, shell-always,
+                             shell-escape, shell-escape-always, c, escape
+  -r, --reverse              обратный порядок сортировки
+  -R, --recursive            рекурсивно показывать каталоги
+  -s, --size                 печатать размер каждого файла в блоках
+  -S                         сортировать по размеру файла, большие сначала
+      --sort=СЛОВО           сортировать по СЛОВУ, а не по имени: 
+                             none (без сортировки) -U, size (размер) -S,
+                             time (время) -t, version (версия) -v,
+                             extension (расширение) -X
+                             
+      --time=СЛОВО           с ключом -l, показывать вместо времени
+                             изменения время, заданное СЛОВОМ: 
+                             atime, access, use (-u),
+                             ctime, status (-c);
+                             если --sort=time, использовать указанное
+                             время в качестве ключа сортировки
+      --time-style=СТИЛЬ     с -l, показывать время используя СТИЛЬ:
+                             full-iso, long-iso, iso, locale, +ФОРМАТ;
+                             ФОРМАТ интерпретируется как в «date»;
+                             если ФОРМАТ — это
+                             ФОРМАТ1<перевод-строки>ФОРМАТ2, то
+                             ФОРМАТ1 применяется к старым файлам,
+                             а ФОРМАТ2 к новым; если к СТИЛЮ добавлен
+                             префикс «posix-», то он действует только
+                             в локали, отличной от POSIX
+  -t                         сортировать по времени изменения,
+                             сначала самые новые
+  -T, --tabsize=РАЗМЕР       использовать табуляцию указанного РАЗМЕРА, а не 8
+  -u                         с -lt: сортировать и показывать время доступа;
+                             c -l: показывать время доступа и сортировать
+                             по имени; иначе сортировать по времени доступа,
+                             сначала самые новые
+  -U                         не сортировать; выводить в соответствии с
+                             физическим расположением в каталоге
+  -v                         сортировать по номерам (версии) в текстовом
+                             представлении
+  -w, --width=ЧИСЛО          устанавливает ширину вывода равной ЧИСЛО.
+                             0 означает отсутствие ограничения.
+  -x                         перечислять по строкам, а не по столбцам
+  -X                         сортировать по расширению в алфавитном порядке
+  -Z, --context              печатать любой контекст безопасности каждого
+                             файла
+  -1                         перечислять по одному файлу на строке.
+                             Символ «\n» не учитывается, если указан -q или -b
+      --help     показать эту справку и выйти
+      --version  показать информацию о версии и выйти
+
+РАЗМЕР задаётся целым числом и необязательной единицей изменения
+(пример: 10K это 10*1024). Единицы изменения:
+K, M, G, T, P, E, Z, Y (степень 1024) или KB, MB, … (степень 1000).
+
+Использование цветов для различения типов файла по умолчанию выключено и
+с помощью --color=never. С --color=auto, ls выдаёт цветовые коды только когда
+стандартный вывод подключён к терминалу. Переменная окружения LS_COLORS
+служит для изменения значений. Для её установки используйте команду dircolors.
+
+Коды выхода:
+ 0  всё отлично,
+ 1  небольшие проблемы (например, недоступен подкаталог),
+ 2  серьёзная проблема (например, недоступен аргумент командной строки).
+
+Оперативная справка GNU coreutils: <http://www.gnu.org/software/coreutils/>
+Об ошибках в переводе сообщений «ls» сообщайте по адресу <gnu@mx.ru>
+Полная документация: <http://www.gnu.org/software/coreutils/ls>
+или доступная локально: info '(coreutils) ls invocation'
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ls -i
+680546 file1  680548 file2  680520 file3  680546 file4
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ rm file1
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll
+итого 16
+drwxrwxr-x  2 student student 4096 окт  5 20:36 ./
+drwxr-xr-x 24 student student 4096 окт  5 20:31 ../
+-rw-rw-r--  1 student student   15 окт  5 20:32 file2
+lrwxrwxrwx  1 student student    5 окт  5 20:33 file3 -> file1
+-rw-rw-r--  1 student student   15 окт  5 20:31 file4
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll -i
+итого 16
+680545 drwxrwxr-x  2 student student 4096 окт  5 20:36 ./
+680305 drwxr-xr-x 24 student student 4096 окт  5 20:31 ../
+680548 -rw-rw-r--  1 student student   15 окт  5 20:32 file2
+680520 lrwxrwxrwx  1 student student    5 окт  5 20:33 file3 -> file1
+680546 -rw-rw-r--  1 student student   15 окт  5 20:31 file4
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ 
+student@Ubuntu-MySQL-VirtualBox:~$ tree
+.
+├── examples.desktop
+├── tasks
+│   ├── file2
+│   ├── file3 -> file1
+│   └── file4
+├── tasks2
+├── Видео
+├── Документы
+├── Загрузки
+├── Изображения
+├── Музыка
+├── Общедоступные
+├── Рабочий стол
+└── Шаблоны
+
+10 directories, 4 files
+student@Ubuntu-MySQL-VirtualBox:~$ cd tasks
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll
+итого 16
+drwxrwxr-x  2 student student 4096 окт  5 20:36 ./
+drwxr-xr-x 25 student student 4096 окт  5 20:37 ../
+-rw-rw-r--  1 student student   15 окт  5 20:32 file2
+lrwxrwxrwx  1 student student    5 окт  5 20:33 file3 -> file1
+-rw-rw-r--  1 student student   15 окт  5 20:31 file4
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ mv file2 secondfile
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ mv file4 fourthfile
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll
+итого 16
+drwxrwxr-x  2 student student 4096 окт  5 20:40 ./
+drwxr-xr-x 25 student student 4096 окт  5 20:37 ../
+lrwxrwxrwx  1 student student    5 окт  5 20:33 file3 -> file1
+-rw-rw-r--  1 student student   15 окт  5 20:31 fourthfile
+-rw-rw-r--  1 student student   15 окт  5 20:32 secondfile
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ln -s secondfile softlink2
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ln -s fourthfile softlink4
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll
+итого 16
+drwxrwxr-x  2 student student 4096 окт  5 20:41 ./
+drwxr-xr-x 25 student student 4096 окт  5 20:37 ../
+lrwxrwxrwx  1 student student    5 окт  5 20:33 file3 -> file1
+-rw-rw-r--  1 student student   15 окт  5 20:31 fourthfile
+-rw-rw-r--  1 student student   15 окт  5 20:32 secondfile
+lrwxrwxrwx  1 student student   10 окт  5 20:41 softlink2 -> secondfile
+lrwxrwxrwx  1 student student   10 окт  5 20:41 softlink4 -> fourthfile
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ mv softlink2 ~/tasks2
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ tree
+.
+├── file3 -> file1
+├── fourthfile
+├── secondfile
+└── softlink4 -> fourthfile
+
+0 directories, 4 files
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ mv softlink4 ~/tasks2
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ cd ~
+student@Ubuntu-MySQL-VirtualBox:~$ tree
+.
+├── examples.desktop
+├── tasks
+│   ├── file3 -> file1
+│   ├── fourthfile
+│   └── secondfile
+├── tasks2
+│   ├── softlink2 -> secondfile
+│   └── softlink4 -> fourthfile
+├── Видео
+├── Документы
+├── Загрузки
+├── Изображения
+├── Музыка
+├── Общедоступные
+├── Рабочий стол
+└── Шаблоны
+
+10 directories, 6 files
+student@Ubuntu-MySQL-VirtualBox:~$ 
+student@Ubuntu-MySQL-VirtualBox:~$ cd tasks
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ echo first > file1
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ echo second > file2
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll
+итого 24
+drwxrwxr-x  2 student student 4096 окт  5 20:44 ./
+drwxr-xr-x 25 student student 4096 окт  5 20:37 ../
+-rw-rw-r--  1 student student    6 окт  5 20:44 file1
+-rw-rw-r--  1 student student    7 окт  5 20:44 file2
+lrwxrwxrwx  1 student student    5 окт  5 20:33 file3 -> file1
+-rw-rw-r--  1 student student   15 окт  5 20:31 fourthfile
+-rw-rw-r--  1 student student   15 окт  5 20:32 secondfile
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ chmod 664 file1
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll
+итого 24
+drwxrwxr-x  2 student student 4096 окт  5 20:44 ./
+drwxr-xr-x 25 student student 4096 окт  5 20:37 ../
+-rw-rw-r--  1 student student    6 окт  5 20:44 file1
+-rw-rw-r--  1 student student    7 окт  5 20:44 file2
+lrwxrwxrwx  1 student student    5 окт  5 20:33 file3 -> file1
+-rw-rw-r--  1 student student   15 окт  5 20:31 fourthfile
+-rw-rw-r--  1 student student   15 окт  5 20:32 secondfile
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ chmod 600 file2
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ ll
+итого 24
+drwxrwxr-x  2 student student 4096 окт  5 20:44 ./
+drwxr-xr-x 25 student student 4096 окт  5 20:37 ../
+-rw-rw-r--  1 student student    6 окт  5 20:44 file1
+-rw-------  1 student student    7 окт  5 20:44 file2
+lrwxrwxrwx  1 student student    5 окт  5 20:33 file3 -> file1
+-rw-rw-r--  1 student student   15 окт  5 20:31 fourthfile
+-rw-rw-r--  1 student student   15 окт  5 20:32 secondfile
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ 
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ sudo useradd -m -s /bin/bash superuser
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ sudo passwd superuser 
+Введите новый пароль UNIX: 
+Повторите ввод нового пароля UNIX: 
+passwd: пароль успешно обновлён
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ sudo usermod -G sudo superuser 
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ groups superuser 
+superuser : superuser sudo
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ 
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ sudo groupadd developer
+student@Ubuntu-MySQL-VirtualBox:~/tasks$ cd ~
+student@Ubuntu-MySQL-VirtualBox:~$ mkdir developers
+student@Ubuntu-MySQL-VirtualBox:~$ cd developers
+student@Ubuntu-MySQL-VirtualBox:~/developers$ sudo useradd -m -s /bin/bash developer1
+student@Ubuntu-MySQL-VirtualBox:~/developers$ sudo passwd developer1
+Введите новый пароль UNIX: 
+Повторите ввод нового пароля UNIX: 
+passwd: пароль успешно обновлён
+student@Ubuntu-MySQL-VirtualBox:~/developers$ sudo useradd -m -s /bin/bash developer2
+student@Ubuntu-MySQL-VirtualBox:~/developers$ sudo passwd developer2
+Введите новый пароль UNIX: 
+Повторите ввод нового пароля UNIX: 
+passwd: пароль успешно обновлён
+student@Ubuntu-MySQL-VirtualBox:~/developers$ sudo usermod -G developer developer1
+student@Ubuntu-MySQL-VirtualBox:~/developers$ sudo usermod -G developer developer2
+student@Ubuntu-MySQL-VirtualBox:~/developers$ more /etc/group | grep developer
+developer:x:1002:developer1,developer2
+developer1:x:1003:
+developer2:x:1004:
+student@Ubuntu-MySQL-VirtualBox:~/developers$ sudo chown -R :developer . 
+student@Ubuntu-MySQL-VirtualBox:~/developers$ sudo chmod -R 2774 .
+student@Ubuntu-MySQL-VirtualBox:~/developers$ mkdir shared_developer
+student@Ubuntu-MySQL-VirtualBox:~/developers$ chmod +t -R shared_developer/
+student@Ubuntu-MySQL-VirtualBox:~/developers$ cd shared_developer/
+student@Ubuntu-MySQL-VirtualBox:~/developers/shared_developer$ touch .file1
+student@Ubuntu-MySQL-VirtualBox:~/developers/shared_developer$ ll
+итого 8
+drwxrwxr-t 2 student developer 4096 окт  5 21:10 ./
+drwxrwsr-- 3 student developer 4096 окт  5 21:09 ../
+-rw-rw-r-- 1 student student      0 окт  5 21:10 .file1
+student@Ubuntu-MySQL-VirtualBox:~/developers/shared_developer$ touch .file1
+student@Ubuntu-MySQL-VirtualBox:~/developers/shared_developer$ ll
+итого 8
+drwxrwxr-t 2 student developer 4096 окт  5 21:10 ./
+drwxrwsr-- 3 student developer 4096 окт  5 21:09 ../
+-rw-rw-r-- 1 student student      0 окт  5 21:11 .file1
+student@Ubuntu-MySQL-VirtualBox:~/developers/shared_developer$ ls
+student@Ubuntu-MySQL-VirtualBox:~/developers/shared_developer$ ll -i
+итого 8
+drwxrwxr-t 2 student developer 4096 окт  5 21:10 ./
+drwxrwsr-- 3 student developer 4096 окт  5 21:09 ../
+-rw-rw-r-- 1 student student      0 окт  5 21:11 .file1
+student@Ubuntu-MySQL-VirtualBox:~/developers/shared_developer$ ls
+student@Ubuntu-MySQL-VirtualBox:~/developers/shared_developer$ 
+
