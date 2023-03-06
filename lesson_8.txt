@@ -1,0 +1,289 @@
+1. Переустановить операционную систему (по желанию, для дополнительной практики)
+2. Подключить репозиторий Docker.
+3. Запустить контейнер с Ubuntu.
+4. * Используя Dockerfile, собрать связку nginx + PHP-FPM в одном контейнере.
+
+student@Ubuntu-MySQL-VirtualBox:~$ sudo apt update
+[sudo] пароль для student: 
+Сущ:1 http://ru.archive.ubuntu.com/ubuntu xenial InRelease
+Пол:2 http://ru.archive.ubuntu.com/ubuntu xenial-updates InRelease [109 kB]
+Пол:3 http://ru.archive.ubuntu.com/ubuntu xenial-backports InRelease [107 kB]
+Сущ:4 http://ppa.launchpad.net/linuxuprising/java/ubuntu xenial InRelease
+Сущ:5 http://ppa.launchpad.net/nginx/stable/ubuntu xenial InRelease
+Пол:6 http://security.ubuntu.com/ubuntu xenial-security InRelease [109 kB]
+Сущ:7 http://ppa.launchpad.net/webupd8team/java/ubuntu xenial InRelease
+Пол:8 https://esm.ubuntu.com/infra/ubuntu xenial-infra-security InRelease [7 509 B]
+Пол:9 https://esm.ubuntu.com/infra/ubuntu xenial-infra-updates InRelease [7 475 B]
+Пол:10 http://ru.archive.ubuntu.com/ubuntu xenial-updates/main amd64 DEP-11 Metadata [327 kB]
+Пол:11 http://ru.archive.ubuntu.com/ubuntu xenial-updates/universe amd64 DEP-11 Metadata [281 kB]
+Сущ:12 https://dbeaver.io/debs/dbeaver-ce  InRelease        
+Пол:13 http://ru.archive.ubuntu.com/ubuntu xenial-updates/multiverse amd64 DEP-11 Metadata [5 960 B]
+Пол:14 http://ru.archive.ubuntu.com/ubuntu xenial-backports/main amd64 DEP-11 Metadata [3 328 B]
+Пол:15 http://ru.archive.ubuntu.com/ubuntu xenial-backports/universe amd64 DEP-11 Metadata [6 608 B]
+Пол:16 http://security.ubuntu.com/ubuntu xenial-security/main amd64 DEP-11 Metadata [93,6 kB]
+Пол:17 http://security.ubuntu.com/ubuntu xenial-security/universe amd64 DEP-11 Metadata [130 kB]
+Пол:18 http://security.ubuntu.com/ubuntu xenial-security/multiverse amd64 DEP-11 Metadata [2 468 B]
+Получено 1 190 kB за 3с (389 kB/s)                          
+Чтение списков пакетов… Готово
+Построение дерева зависимостей       
+Чтение информации о состоянии… Готово
+Все пакеты имеют последние версии.
+student@Ubuntu-MySQL-VirtualBox:~$ sudo apt install apt-transport-https ca-certificates curl
+Чтение списков пакетов… Готово
+Построение дерева зависимостей       
+Чтение информации о состоянии… Готово
+Уже установлен пакет apt-transport-https самой новой версии (1.2.35).
+Уже установлен пакет ca-certificates самой новой версии (20210119~16.04.1).
+Следующие пакеты устанавливались автоматически и больше не требуются:
+  libevent-core-2.0-5 libnginx-mod-http-auth-pam libnginx-mod-http-dav-ext libnginx-mod-http-echo
+  libnginx-mod-http-geoip libnginx-mod-http-image-filter libnginx-mod-http-subs-filter libnginx-mod-http-upstream-fair
+  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream linux-headers-4.15.0-45
+  linux-headers-4.15.0-45-generic linux-image-4.15.0-45-generic linux-modules-4.15.0-45-generic
+  linux-modules-extra-4.15.0-45-generic nginx-common nginx-full snapd-login-service
+Для их удаления используйте «sudo apt autoremove».
+Следующие НОВЫЕ пакеты будут установлены:
+  curl
+Обновлено 0 пакетов, установлено 1 новых пакетов, для удаления отмечено 0 пакетов, и 0 пакетов не обновлено.
+Необходимо скачать 139 kB архивов.
+После данной операции объём занятого дискового пространства возрастёт на 340 kB.
+Хотите продолжить? [Д/н] y
+Пол:1 http://ru.archive.ubuntu.com/ubuntu xenial-updates/main amd64 curl amd64 7.47.0-1ubuntu2.19 [139 kB]
+Получено 139 kB за 0с (1 802 kB/s)
+Выбор ранее не выбранного пакета curl.
+(Чтение базы данных … на данный момент установлено 258218 файлов и каталогов.)
+Подготовка к распаковке …/curl_7.47.0-1ubuntu2.19_amd64.deb …
+Распаковывается curl (7.47.0-1ubuntu2.19) …
+Обрабатываются триггеры для man-db (2.7.5-1) …
+Настраивается пакет curl (7.47.0-1ubuntu2.19) …
+student@Ubuntu-MySQL-VirtualBox:~$ software-properties-common
+software-properties-common: команда не найдена
+student@Ubuntu-MySQL-VirtualBox:~$ sudo apt install software-properties-common
+Чтение списков пакетов… Готово
+Построение дерева зависимостей       
+Чтение информации о состоянии… Готово
+Уже установлен пакет software-properties-common самой новой версии (0.96.20.10).
+Следующие пакеты устанавливались автоматически и больше не требуются:
+  libevent-core-2.0-5 libnginx-mod-http-auth-pam libnginx-mod-http-dav-ext libnginx-mod-http-echo
+  libnginx-mod-http-geoip libnginx-mod-http-image-filter libnginx-mod-http-subs-filter libnginx-mod-http-upstream-fair
+  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream linux-headers-4.15.0-45
+  linux-headers-4.15.0-45-generic linux-image-4.15.0-45-generic linux-modules-4.15.0-45-generic
+  linux-modules-extra-4.15.0-45-generic nginx-common nginx-full snapd-login-service
+Для их удаления используйте «sudo apt autoremove».
+Обновлено 0 пакетов, установлено 0 новых пакетов, для удаления отмечено 0 пакетов, и 0 пакетов не обновлено.
+student@Ubuntu-MySQL-VirtualBox:~$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+OK
+student@Ubuntu-MySQL-VirtualBox:~$ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+Ошибка: необходимо запускать с правами администратора
+student@Ubuntu-MySQL-VirtualBox:~$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+student@Ubuntu-MySQL-VirtualBox:~$ apt update
+Чтение списков пакетов… Готово
+W: chmod 0700 of directory /var/lib/apt/lists/partial failed - SetupAPTPartialDirectory (1: Операция не позволена)
+E: Не удалось открыть файл блокировки /var/lib/apt/lists/lock - open (13: Отказано в доступе)
+E: Невозможно заблокировать каталог /var/lib/apt/lists/
+W: Проблема при удалении файла /var/cache/apt/pkgcache.bin - RemoveCaches (13: Отказано в доступе)
+W: Проблема при удалении файла /var/cache/apt/srcpkgcache.bin - RemoveCaches (13: Отказано в доступе)
+student@Ubuntu-MySQL-VirtualBox:~$ sudo apt update
+Сущ:1 http://ru.archive.ubuntu.com/ubuntu xenial InRelease
+Сущ:2 http://ru.archive.ubuntu.com/ubuntu xenial-updates InRelease
+Сущ:3 http://ru.archive.ubuntu.com/ubuntu xenial-backports InRelease
+Сущ:4 http://ppa.launchpad.net/linuxuprising/java/ubuntu xenial InRelease
+Сущ:5 http://ppa.launchpad.net/nginx/stable/ubuntu xenial InRelease
+Сущ:6 http://security.ubuntu.com/ubuntu xenial-security InRelease
+Сущ:7 http://ppa.launchpad.net/webupd8team/java/ubuntu xenial InRelease
+Пол:8 https://download.docker.com/linux/ubuntu xenial InRelease [66,2 kB]
+Пол:9 https://esm.ubuntu.com/infra/ubuntu xenial-infra-security InRelease [7 509 B]
+Пол:10 https://esm.ubuntu.com/infra/ubuntu xenial-infra-updates InRelease [7 475 B]
+Сущ:11 https://dbeaver.io/debs/dbeaver-ce  InRelease
+Пол:12 https://download.docker.com/linux/ubuntu xenial/stable amd64 Packages [21,0 kB]
+Получено 102 kB за 2с (38,8 kB/s)                     
+Чтение списков пакетов… Готово
+Построение дерева зависимостей       
+Чтение информации о состоянии… Готово
+Все пакеты имеют последние версии.
+student@Ubuntu-MySQL-VirtualBox:~$ 
+student@Ubuntu-MySQL-VirtualBox:~$ sudo apt install docker-ce -y
+Чтение списков пакетов… Готово
+Построение дерева зависимостей       
+Чтение информации о состоянии… Готово
+Следующие пакеты устанавливались автоматически и больше не требуются:
+  libevent-core-2.0-5 libnginx-mod-http-auth-pam
+  libnginx-mod-http-dav-ext libnginx-mod-http-echo
+  libnginx-mod-http-geoip libnginx-mod-http-image-filter
+  libnginx-mod-http-subs-filter
+  libnginx-mod-http-upstream-fair
+  libnginx-mod-http-xslt-filter libnginx-mod-mail
+  libnginx-mod-stream linux-headers-4.15.0-45
+  linux-headers-4.15.0-45-generic
+  linux-image-4.15.0-45-generic
+  linux-modules-4.15.0-45-generic
+  linux-modules-extra-4.15.0-45-generic nginx-common
+  nginx-full snapd-login-service
+Для их удаления используйте «sudo apt autoremove».
+Будут установлены следующие дополнительные пакеты:
+  containerd.io docker-ce-cli docker-ce-rootless-extras
+  docker-scan-plugin git git-man liberror-perl pigz
+Предлагаемые пакеты:
+  aufs-tools cgroupfs-mount | cgroup-lite git-daemon-run
+  | git-daemon-sysvinit git-doc git-el git-email git-gui
+  gitk gitweb git-arch git-cvs git-mediawiki git-svn
+Рекомендуемые пакеты:
+  slirp4netns
+Следующие НОВЫЕ пакеты будут установлены:
+  containerd.io docker-ce docker-ce-cli
+  docker-ce-rootless-extras docker-scan-plugin git git-man
+  liberror-perl pigz
+Обновлено 0 пакетов, установлено 9 новых пакетов, для удаления отмечено 0 пакетов, и 0 пакетов не обновлено.
+Необходимо скачать 111 MB архивов.
+После данной операции объём занятого дискового пространства возрастёт на 491 MB.
+Пол:1 http://ru.archive.ubuntu.com/ubuntu xenial/universe amd64 pigz amd64 2.3.1-2 [61,1 kB]
+Пол:2 http://ru.archive.ubuntu.com/ubuntu xenial/main amd64 liberror-perl all 0.17-1.2 [19,6 kB]
+Пол:3 http://ru.archive.ubuntu.com/ubuntu xenial-updates/main amd64 git-man all 1:2.7.4-0ubuntu1.10 [737 kB]
+Пол:4 http://ru.archive.ubuntu.com/ubuntu xenial-updates/main amd64 git amd64 1:2.7.4-0ubuntu1.10 [3 183 kB]
+Пол:5 https://download.docker.com/linux/ubuntu xenial/stable amd64 containerd.io amd64 1.4.6-1 [28,0 MB]
+Пол:6 https://download.docker.com/linux/ubuntu xenial/stable amd64 docker-ce-cli amd64 5:20.10.7~3-0~ubuntu-xenial [41,1 MB]
+Пол:7 https://download.docker.com/linux/ubuntu xenial/stable amd64 docker-ce amd64 5:20.10.7~3-0~ubuntu-xenial [24,8 MB]
+Пол:8 https://download.docker.com/linux/ubuntu xenial/stable amd64 docker-ce-rootless-extras amd64 5:20.10.7~3-0~ubuntu-xenial [9 052 kB]
+Пол:9 https://download.docker.com/linux/ubuntu xenial/stable amd64 docker-scan-plugin amd64 0.8.0~ubuntu-xenial [3 889 kB]
+Получено 111 MB за 12с (8 742 kB/s)                         
+Выбор ранее не выбранного пакета pigz.
+(Чтение базы данных … на данный момент установлено 258225 файлов и каталогов.)
+Подготовка к распаковке …/pigz_2.3.1-2_amd64.deb …
+Распаковывается pigz (2.3.1-2) …
+Выбор ранее не выбранного пакета containerd.io.
+Подготовка к распаковке …/containerd.io_1.4.6-1_amd64.deb …
+Распаковывается containerd.io (1.4.6-1) …
+Выбор ранее не выбранного пакета docker-ce-cli.
+Подготовка к распаковке …/docker-ce-cli_5%3a20.10.7~3-0~ubuntu-xenial_amd64.deb …
+Распаковывается docker-ce-cli (5:20.10.7~3-0~ubuntu-xenial) …
+Выбор ранее не выбранного пакета docker-ce.
+Подготовка к распаковке …/docker-ce_5%3a20.10.7~3-0~ubuntu-xenial_amd64.deb …
+Распаковывается docker-ce (5:20.10.7~3-0~ubuntu-xenial) …
+Выбор ранее не выбранного пакета docker-ce-rootless-extras.
+Подготовка к распаковке …/docker-ce-rootless-extras_5%3a20.10.7~3-0~ubuntu-xenial_amd64.deb …
+Распаковывается docker-ce-rootless-extras (5:20.10.7~3-0~ubuntu-xenial) …
+Выбор ранее не выбранного пакета docker-scan-plugin.
+Подготовка к распаковке …/docker-scan-plugin_0.8.0~ubuntu-xenial_amd64.deb …
+Распаковывается docker-scan-plugin (0.8.0~ubuntu-xenial) …
+Выбор ранее не выбранного пакета liberror-perl.
+Подготовка к распаковке …/liberror-perl_0.17-1.2_all.deb …
+Распаковывается liberror-perl (0.17-1.2) …
+Выбор ранее не выбранного пакета git-man.
+Подготовка к распаковке …/git-man_1%3a2.7.4-0ubuntu1.10_all.deb …
+Распаковывается git-man (1:2.7.4-0ubuntu1.10) …
+Выбор ранее не выбранного пакета git.
+Подготовка к распаковке …/git_1%3a2.7.4-0ubuntu1.10_amd64.deb …
+Распаковывается git (1:2.7.4-0ubuntu1.10) …
+Обрабатываются триггеры для man-db (2.7.5-1) …
+Обрабатываются триггеры для ureadahead (0.100.0-19.1) …
+Обрабатываются триггеры для systemd (229-4ubuntu21.31) …
+Настраивается пакет pigz (2.3.1-2) …
+Настраивается пакет containerd.io (1.4.6-1) …
+Настраивается пакет docker-ce-cli (5:20.10.7~3-0~ubuntu-xenial) …
+Настраивается пакет docker-ce (5:20.10.7~3-0~ubuntu-xenial) …
+Настраивается пакет docker-ce-rootless-extras (5:20.10.7~3-0~ubuntu-xenial) …
+Настраивается пакет docker-scan-plugin (0.8.0~ubuntu-xenial) …
+Настраивается пакет liberror-perl (0.17-1.2) …
+Настраивается пакет git-man (1:2.7.4-0ubuntu1.10) …
+Настраивается пакет git (1:2.7.4-0ubuntu1.10) …
+Обрабатываются триггеры для ureadahead (0.100.0-19.1) …
+Обрабатываются триггеры для systemd (229-4ubuntu21.31) …
+student@Ubuntu-MySQL-VirtualBox:~$ sudo systemctl status docker
+● docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enable
+   Active: active (running) since Ср 2021-10-13 22:48:27 MSK;
+     Docs: https://docs.docker.com
+ Main PID: 10667 (dockerd)
+   CGroup: /system.slice/docker.service
+           └─10667 /usr/bin/dockerd -H fd:// --containerd=/ru
+
+окт 13 22:48:26 Ubuntu-MySQL-VirtualBox dockerd[10667]: time=
+окт 13 22:48:26 Ubuntu-MySQL-VirtualBox dockerd[10667]: time=
+окт 13 22:48:26 Ubuntu-MySQL-VirtualBox dockerd[10667]: time=
+окт 13 22:48:26 Ubuntu-MySQL-VirtualBox dockerd[10667]: time=
+окт 13 22:48:27 Ubuntu-MySQL-VirtualBox dockerd[10667]: time=
+окт 13 22:48:27 Ubuntu-MySQL-VirtualBox dockerd[10667]: time=
+окт 13 22:48:27 Ubuntu-MySQL-VirtualBox dockerd[10667]: time=
+окт 13 22:48:27 Ubuntu-MySQL-VirtualBox dockerd[10667]: time=
+окт 13 22:48:27 Ubuntu-MySQL-VirtualBox systemd[1]: Started D
+окт 13 22:48:28 Ubuntu-MySQL-VirtualBox dockerd[10667]: time=
+lines 1-18/18 (END)
+student@Ubuntu-MySQL-VirtualBox:~$ sudo usermod -aG $USER
+Использование: usermod [параметры] ПОЛЬЗОВАТЕЛЬ
+
+Параметры:
+  -c, --comment КОММЕНТАРИЙ     новое значение поля GECOS
+  -d, --home ДОМ_КАТ            новый домашний каталог учётной записи
+  -e, --expiredate ДАТА_УСТ     установить дату окончания действия
+                                учётной записи в ДАТА_УСТ
+  -f, --inactive НЕАКТИВНОСТЬ   установить период неактивности пароля после
+                                устаревания учётной записи равным НЕАКТИВНОСТЬ
+  -g, --gid ГРУППА              принудительно назначить первичную ГРУППУ
+  -G, --groups ГРУППЫ           список дополнительных ГРУПП
+  -a, --append                  добавить пользователя в дополнительные
+                                ГРУППЫ, указанные в параметре -G не удаляя
+                                пользователя из других групп
+  -h, --help                    показать данное сообщение и закончить работу
+  -l, --login НОВОЕ_ИМЯ         новое значение имени учётной записи
+  -L, --lock                    заблокировать учётную запись
+  -m, --move-home               переместить содержимое домашнего каталога в
+                                новое место (использовать только вместе с -d)
+  -o, --non-unique              разрешить создание учётной записи с уже
+                                имеющимся (не уникальным) UID
+  -p, --password ПАРОЛЬ         задать новый шифрованный пароль для
+                                учётной записи
+  -R, --root КАТ_CHROOT         каталог, в который выполняется chroot
+  -s, --shell ОБОЛОЧКА          новая регистрационная оболочка для учётной
+                                записи
+  -u, --uid UID                 новый UID для учётной записи
+  -U, --unlock                  разблокировать учётную запись
+  -v, --add-subuids FIRST-LAST  add range of subordinate uids
+  -V, --del-subuids FIRST-LAST  remove range of subordinate uids
+  -w, --add-subgids FIRST-LAST  add range of subordinate gids
+  -W, --del-subgids FIRST-LAST  remove range of subordinate gids
+  -Z, --selinux-user SEUSER     новое пользовательское сопоставление
+                                SELinux для учётной записи
+
+student@Ubuntu-MySQL-VirtualBox:~$ sudo usermod -aG docker $USER
+student@Ubuntu-MySQL-VirtualBox:~$ id -nG
+student adm cdrom sudo dip plugdev lpadmin sambashare
+student@Ubuntu-MySQL-VirtualBox:~$ sudo usermod -aG docker ${USER}
+student@Ubuntu-MySQL-VirtualBox:~$ id -nG
+student adm cdrom sudo dip plugdev lpadmin sambashare
+student@Ubuntu-MySQL-VirtualBox:~$ groups docker
+groups: «docker»: такого пользователя нет
+student@Ubuntu-MySQL-VirtualBox:~$ groups student
+student : student adm cdrom sudo dip plugdev lpadmin sambashare docker
+student@Ubuntu-MySQL-VirtualBox:~$ 
+student@Ubuntu-MySQL-VirtualBox:~$ sudo docker run --name Ubuntu1804 ubuntu:18.04
+Unable to find image 'ubuntu:18.04' locally
+18.04: Pulling from library/ubuntu
+284055322776: Pull complete 
+Digest: sha256:bfb4cabd667790ead5c95d9fe341937f0c21118fa79bc768d51c5da9d1dbe917
+Status: Downloaded newer image for ubuntu:18.04
+student@Ubuntu-MySQL-VirtualBox:~$ sudo docker attach Ubuntu1804
+You cannot attach to a stopped container, start it first
+student@Ubuntu-MySQL-VirtualBox:~$ sudo docker rm Ubuntu1804Ubuntu1804
+student@Ubuntu-MySQL-VirtualBox:~$ sudo docker run -it --name Ubuntu1804 ubuntu:18.04 /bin/bash
+root@55a23431ea24:/# 
+student@Ubuntu-MySQL-VirtualBox:~$ nano Dockerfile 
+student@Ubuntu-MySQL-VirtualBox:~$ cat Dockerfile 
+FROM ubuntu:18.04
+RUN apt-get update
+RUN apt-get install -y nginx php7.2-fpm supervisor && \
+rm -rf /var/lib/apt/lists/*
+ENV nginx_vhost /etc/nginx/sites-available/default
+ENV php_conf /etc/php/7.2/fpm/php.ini
+ENV nginx_conf /etc/nginx/nginx.conf
+ENV supervisor_conf /etc/supervisor/supervisord.conf
+COPY default ${nginx_vhost}
+RUN sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${php_conf} && \
+echo "\ndaemon off;" >> ${nginx_conf}
+COPY supervisord.conf ${supervisor_conf}
+RUN mkdir -p /run/php && \
+chown -R www-data:www-data /var/www/html && \
+chown -R www-data:www-data /run/php
+VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
+COPY start.sh /start.sh
+CMD ["./start.sh"]
+EXPOSE 80 443
+student@Ubuntu-MySQL-VirtualBox:~$
