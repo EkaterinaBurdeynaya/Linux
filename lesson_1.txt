@@ -1,0 +1,23 @@
+1. Обзавестись установленной версией Linux Ubuntu.
+В качестве решения необходимо прислать текстовый файл (*.txt) с кодом команды, выводящей информацию о версии ОС (вместе с результатом работы этой команды)
+
+student@Ubuntu-MySQL-VirtualBox:~$ uname
+Linux
+student@Ubuntu-MySQL-VirtualBox:~$ whoami
+student
+student@Ubuntu-MySQL-VirtualBox:~$ pwd
+/home/student
+student@Ubuntu-MySQL-VirtualBox:~$ uname -a
+Linux Ubuntu-MySQL-VirtualBox 4.15.0-142-generic #146~16.04.1-Ubuntu SMP Tue Apr 13 09:27:15 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+student@Ubuntu-MySQL-VirtualBox:~$ hostnamectl
+   Static hostname: Ubuntu-MySQL-VirtualBox
+         Icon name: computer-vm
+           Chassis: vm
+        Machine ID: 6917807b2dca43d681d86ffe5ca8e5d1
+           Boot ID: 611847d6c14c4387bfa6af3bdbb4152c
+    Virtualization: oracle
+  Operating System: Ubuntu 16.04.7 LTS
+            Kernel: Linux 4.15.0-142-generic
+      Architecture: x86-64
+student@Ubuntu-MySQL-VirtualBox:~$ ^C
+student@Ubuntu-MySQL-VirtualBox:~$ 
