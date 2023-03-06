@@ -1,0 +1,420 @@
+Урок 4. Загрузка ОС и процессы
+1. Потоки ввода/вывода. Создать файл, используя команду echo. Используя команду cat, прочитать содержимое всех файлов каталога etc, ошибки перенаправить в отдельный файл.
+2. Конвейер (pipeline). Использовать команду cut на вывод длинного списка каталога, чтобы отобразить только права доступа к файлам. Затем отправить в конвейере этот вывод на sort и uniq, чтобы отфильтровать все повторяющиеся строки.
+3. Управление процессами.) Изменить конфигурационный файл службы SSH: /etc/ssh/sshd_config, отключив аутентификацию по паролю PasswordAuthentication no. Выполните рестарт службы systemctl restart sshd (service sshd restart), верните аутентификацию по паролю, выполните reload службы systemctl reload sshd (services sshd reload). В чём различие между действиями restart и reload? Создайте файл при помощи команды cat > file_name, напишите текст и завершите комбинацией ctrl+d. Какой сигнал передадим процессу?
+4. Сигналы процессам. Запустите mc. Используя ps, найдите PID процесса, завершите процесс, передав ему сигнал 9.
+
+example ftp_proxy, ftp-proxy and ftpproxy are the same.
+
+
+##
+## Global settings (useful for setting up in /etc/wgetrc).
+## Think well before you change them, since they may reduce wget's
+## functionality, and make it behave contrary to the documentation:
+##
+
+# You can set retrieve quota for beginners by specifying a value
+# optionally followed by 'K' (kilobytes) or 'M' (megabytes).  The
+# default quota is unlimited.
+#quota = inf
+
+# You can lower (or raise) the default number of retries when
+# downloading a file (default is 20).
+#tries = 20
+
+# Lowering the maximum depth of the recursive retrieval is handy to
+# prevent newbies from going too "deep" when they unwittingly start
+# the recursive retrieval.  The default is 5.
+#reclevel = 5
+
+# By default Wget uses "passive FTP" transfer where the client
+# initiates the data connection to the server rather than the other
+# way around.  That is required on systems behind NAT where the client
+# computer cannot be easily reached from the Internet.  However, some
+# firewalls software explicitly supports active FTP and in fact has
+# problems supporting passive transfer.  If you are in such
+# environment, use "passive_ftp = off" to revert to active FTP.
+#passive_ftp = off
+passive_ftp = on
+
+# The "wait" command below makes Wget wait between every connection.
+# If, instead, you want Wget to wait only between retries of failed
+# downloads, set waitretry to maximum number of seconds to wait (Wget
+# will use "linear backoff", waiting 1 second after the first failure
+# on a file, 2 seconds after the second failure, etc. up to this max).
+#waitretry = 10
+
+
+##
+## Local settings (for a user to set in his $HOME/.wgetrc).  It is
+## *highly* undesirable to put these settings in the global file, since
+## they are potentially dangerous to "normal" users.
+##
+## Even when setting up your own ~/.wgetrc, you should know what you
+## are doing before doing so.
+##
+
+# Set this to on to use timestamping by default:
+#timestamping = off
+
+# It is a good idea to make Wget send your email address in a `From:'
+# header with your request (so that server administrators can contact
+# you in case of errors).  Wget does *not* send `From:' by default.
+#header = From: Your Name <username@site.domain>
+
+# You can set up other headers, like Accept-Language.  Accept-Language
+# is *not* sent by default.
+#header = Accept-Language: en
+
+# You can set the default proxies for Wget to use for http, https, and ftp.
+# They will override the value in the environment.
+#https_proxy = http://proxy.yoyodyne.com:18023/
+#http_proxy = http://proxy.yoyodyne.com:18023/
+#ftp_proxy = http://proxy.yoyodyne.com:18023/
+
+# If you do not want to use proxy at all, set this to off.
+#use_proxy = on
+
+# You can customize the retrieval outlook.  Valid options are default,
+# binary, mega and micro.
+#dot_style = default
+
+# Setting this to off makes Wget not download /robots.txt.  Be sure to
+# know *exactly* what /robots.txt is and how it is used before changing
+# the default!
+#robots = on
+
+# It can be useful to make Wget wait between connections.  Set this to
+# the number of seconds you want Wget to wait.
+#wait = 0
+
+# You can force creating directory structure, even if a single is being
+# retrieved, by setting this to on.
+#dirstruct = off
+
+# You can turn on recursive retrieving by default (don't do this if
+# you are not sure you know what it means) by setting this to on.
+#recursive = off
+
+# To always back up file X as X.orig before converting its links (due
+# to -k / --convert-links / convert_links = on having been specified),
+# set this variable to on:
+#backup_converted = off
+
+# To have Wget follow FTP links from HTML files by default, set this
+# to on:
+#follow_ftp = off
+
+# To try ipv6 addresses first:
+#prefer-family = IPv6
+
+# Set default IRI support state
+#iri = off
+
+# Force the default system encoding
+#localencoding = UTF-8
+
+# Force the default remote server encoding
+#remoteencoding = UTF-8
+
+# Turn on to prevent following non-HTTPS links when in recursive mode
+#httpsonly = off
+
+# Tune HTTPS security (auto, SSLv2, SSLv3, TLSv1, PFS)
+#secureprotocol = auto
+# (c) Zygmunt Krynicki 2007,
+# Licensed under GPL, see COPYING for the whole text
+#
+# This script will look-up command in the database and suggest
+# installation of packages available from the repository
+
+if [[ -x /usr/lib/command-not-found ]] ; then
+	if (( ! ${+functions[command_not_found_handler]} )) ; then
+		function command_not_found_handler {
+			[[ -x /usr/lib/command-not-found ]] || return 1
+			/usr/lib/command-not-found --no-failure-msg -- ${1+"$1"} && :
+		}
+	fi
+fi
+student@Ubuntu-MySQL-VirtualBox:~$ cat errors.txt
+cat: /etc/acpi: Это каталог
+cat: /etc/alternatives: Это каталог
+cat: /etc/apm: Это каталог
+cat: /etc/apparmor: Это каталог
+cat: /etc/apparmor.d: Это каталог
+cat: /etc/apport: Это каталог
+cat: /etc/apt: Это каталог
+cat: /etc/aptdaemon: Это каталог
+cat: /etc/at-spi2: Это каталог
+cat: /etc/avahi: Это каталог
+cat: /etc/bash_completion.d: Это каталог
+cat: /etc/binfmt.d: Это каталог
+cat: /etc/bluetooth: Это каталог
+cat: /etc/brltty: Это каталог
+cat: /etc/ca-certificates: Это каталог
+cat: /etc/calendar: Это каталог
+cat: /etc/chatscripts: Это каталог
+cat: /etc/compizconfig: Это каталог
+cat: /etc/console-setup: Это каталог
+cat: /etc/cracklib: Это каталог
+cat: /etc/cron.d: Это каталог
+cat: /etc/cron.daily: Это каталог
+cat: /etc/cron.hourly: Это каталог
+cat: /etc/cron.monthly: Это каталог
+cat: /etc/cron.weekly: Это каталог
+cat: /etc/cups: Это каталог
+cat: /etc/cupshelpers: Это каталог
+cat: /etc/dbus-1: Это каталог
+cat: /etc/dconf: Это каталог
+cat: /etc/default: Это каталог
+cat: /etc/depmod.d: Это каталог
+cat: /etc/dhcp: Это каталог
+cat: /etc/dictionaries-common: Это каталог
+cat: /etc/dnsmasq.d: Это каталог
+cat: /etc/doc-base: Это каталог
+cat: /etc/dpkg: Это каталог
+cat: /etc/emacs: Это каталог
+cat: /etc/firefox: Это каталог
+cat: /etc/fonts: Это каталог
+cat: /etc/gconf: Это каталог
+cat: /etc/gdb: Это каталог
+cat: /etc/ghostscript: Это каталог
+cat: /etc/gnome: Это каталог
+cat: /etc/gnome-app-install: Это каталог
+cat: /etc/groff: Это каталог
+cat: /etc/group-: Отказано в доступе
+cat: /etc/grub.d: Это каталог
+cat: /etc/gshadow: Отказано в доступе
+cat: /etc/gshadow-: Отказано в доступе
+cat: /etc/gss: Это каталог
+cat: /etc/gtk-2.0: Это каталог
+cat: /etc/gtk-3.0: Это каталог
+cat: /etc/guest-session: Это каталог
+cat: /etc/hp: Это каталог
+cat: /etc/ifplugd: Это каталог
+cat: /etc/ImageMagick-6: Это каталог
+cat: /etc/init: Это каталог
+cat: /etc/init.d: Это каталог
+cat: /etc/initramfs-tools: Это каталог
+cat: /etc/insserv: Это каталог
+cat: /etc/insserv.conf.d: Это каталог
+cat: /etc/iproute2: Это каталог
+cat: /etc/java-11-oracle: Это каталог
+cat: /etc/kbd: Это каталог
+cat: /etc/kernel: Это каталог
+cat: /etc/ldap: Это каталог
+cat: /etc/ld.so.conf.d: Это каталог
+cat: /etc/libnl-3: Это каталог
+cat: /etc/libpaper.d: Это каталог
+cat: /etc/libreoffice: Это каталог
+cat: /etc/lightdm: Это каталог
+cat: /etc/logcheck: Это каталог
+cat: /etc/logrotate.d: Это каталог
+cat: /etc/mc: Это каталог
+cat: /etc/modprobe.d: Это каталог
+cat: /etc/modules-load.d: Это каталог
+cat: /etc/mysql: Это каталог
+cat: /etc/network: Это каталог
+cat: /etc/NetworkManager: Это каталог
+cat: /etc/newt: Это каталог
+cat: /etc/ODBCDataSources: Это каталог
+cat: /etc/openal: Это каталог
+cat: /etc/opt: Это каталог
+cat: /etc/pam.d: Это каталог
+cat: /etc/passwd-: Отказано в доступе
+cat: /etc/pcmcia: Это каталог
+cat: /etc/perl: Это каталог
+cat: /etc/pki: Это каталог
+cat: /etc/pm: Это каталог
+cat: /etc/polkit-1: Это каталог
+cat: /etc/ppp: Это каталог
+cat: /etc/profile.d: Это каталог
+cat: /etc/pulse: Это каталог
+cat: /etc/python: Это каталог
+cat: /etc/python2.7: Это каталог
+cat: /etc/python3: Это каталог
+cat: /etc/python3.5: Это каталог
+cat: /etc/rc0.d: Это каталог
+cat: /etc/rc1.d: Это каталог
+cat: /etc/rc2.d: Это каталог
+cat: /etc/rc3.d: Это каталог
+cat: /etc/rc4.d: Это каталог
+cat: /etc/rc5.d: Это каталог
+cat: /etc/rc6.d: Это каталог
+cat: /etc/rcS.d: Это каталог
+cat: /etc/resolvconf: Это каталог
+cat: /etc/rsyslog.d: Это каталог
+cat: /etc/sane.d: Это каталог
+cat: /etc/security: Это каталог
+cat: /etc/selinux: Это каталог
+cat: /etc/sensors.d: Это каталог
+cat: /etc/sgml: Это каталог
+cat: /etc/shadow: Отказано в доступе
+cat: /etc/shadow-: Отказано в доступе
+cat: /etc/signon-ui: Это каталог
+cat: /etc/skel: Это каталог
+cat: /etc/speech-dispatcher: Это каталог
+cat: /etc/ssh: Это каталог
+cat: /etc/ssl: Это каталог
+cat: /etc/subgid-: Отказано в доступе
+cat: /etc/subuid-: Отказано в доступе
+cat: /etc/sudoers: Отказано в доступе
+cat: /etc/sudoers.d: Это каталог
+cat: /etc/sysctl.d: Это каталог
+cat: /etc/systemd: Это каталог
+cat: /etc/terminfo: Это каталог
+cat: /etc/thermald: Это каталог
+cat: /etc/thunderbird: Это каталог
+cat: /etc/timidity: Это каталог
+cat: /etc/tmpfiles.d: Это каталог
+cat: /etc/ubuntu-advantage: Это каталог
+cat: /etc/udev: Это каталог
+cat: /etc/udisks2: Это каталог
+cat: /etc/ufw: Это каталог
+cat: /etc/update-manager: Это каталог
+cat: /etc/update-motd.d: Это каталог
+cat: /etc/update-notifier: Это каталог
+cat: /etc/UPower: Это каталог
+cat: /etc/usb_modeswitch.d: Это каталог
+cat: /etc/vim: Это каталог
+cat: /etc/wildmidi: Это каталог
+cat: /etc/wpa_supplicant: Это каталог
+cat: /etc/X11: Это каталог
+cat: /etc/xdg: Это каталог
+cat: /etc/xml: Это каталог
+student@Ubuntu-MySQL-VirtualBox:~$ ls -l
+итого 72
+drwxrwxr-x 3 student student 4096 май 10 22:02 10
+-rw-rw-r-- 1 student student 6168 май 21 18:50 errors.txt
+-rw-r--r-- 1 student student 8980 апр 22  2019 examples.desktop
+drwxrwxr-x 3 student student 4096 май 10 22:05 lesson1
+-rw-rw-r-- 1 student student   16 май 10 22:23 logs.txt
+-rwxrw-r-- 1 student student 3513 май 10 22:38 mciri_poem.txt
+-rw-rw-r-- 1 student student    1 май 21 18:47 new_file.txt
+drwxr-xr-x 2 student student 4096 апр 22  2019 Видео
+drwxr-xr-x 2 student student 4096 апр 22  2019 Документы
+drwxr-xr-x 2 student student 4096 апр 22  2019 Загрузки
+drwxr-xr-x 2 student student 4096 апр 22  2019 Изображения
+drwxr-xr-x 2 student student 4096 апр 22  2019 Музыка
+drwxr-xr-x 2 student student 4096 апр 22  2019 Общедоступные
+drwxr-xr-x 2 student student 4096 апр 22  2019 Рабочий стол
+drwxr-xr-x 2 student student 4096 апр 22  2019 Шаблоны
+student@Ubuntu-MySQL-VirtualBox:~$ cut --help
+Использование: cut КЛЮЧ… [ФАЙЛ]…
+Печатает выбранные части строк из каждого ФАЙЛА на стандартный вывод.
+
+Если ФАЙЛ не задан или задан как -, читает стандартный ввод.
+
+Аргументы, обязательные для длинных ключей, обязательны и для коротких.
+  -b, --bytes=СПИСОК             выбрать только заданные байты
+  -c, --characters=СПИСОК        выбрать только заданные символы
+  -d, --delimiter=РАЗДЕЛИТЕЛЬ    использовать для разделения полей РАЗДЕЛИТЕЛЬ
+                                 вместо табуляции
+  -f, --fields=СПИСОК            выбрать только заданные поля; также печатать
+                                 все строки, не содержащие разделителей, если
+                                 только не задан ключ -s
+  -n                             (игнорируется)
+      --complement               дополнить множество выбранных байт, символов
+                                 или полей
+  -s, --only-delimited           не печатать строки, не содержащие
+                                 разделителей
+      --output-delimiter=СТРОКА  использовать СТРОКУ для разделения полей при
+                                 выводе, по умолчанию используется разделитель
+                                 для ввода
+  -z, --zero-terminated        разделитель строк NUL, а не символ
+                               новой строки
+      --help     показать эту справку и выйти
+      --version  показать информацию о версии и выйти
+
+Используйте один и только один из ключей -b, -c или -f.  СПИСКИ
+состоят из диапазона или нескольких диапазонов, разделенных запятыми.
+Выбранные части входного файла печатаются в том порядке, в котором они
+появляются на входе, и печатаются ровно один раз.
+Диапазоны задаются следующим образом:
+
+  Н     Н-ный байт, символ или поле; отсчитывается от 1
+  Н-    от Н-ного байта, символа или поля до конца строки
+  Н-М   от Н-ного до М-ного (включительно) байта, символа или поля
+  -М    от первого до М-ного (включительно) байта, символа или поля
+
+Оперативная справка GNU coreutils: <http://www.gnu.org/software/coreutils/>
+Об ошибках в переводе сообщений «cut» сообщайте по адресу <gnu@mx.ru>
+Полная документация: <http://www.gnu.org/software/coreutils/cut>
+или доступная локально: info '(coreutils) cut invocation'
+student@Ubuntu-MySQL-VirtualBox:~$ ls -l | cut -b 10 | sort | uniq
+-
+�
+x
+student@Ubuntu-MySQL-VirtualBox:~$ ls -l | cut -b -10 | sort | uniq
+drwxrwxr-x
+drwxr-xr-x
+-rw-r--r--
+-rw-rw-r--
+-rwxrw-r--
+итого
+student@Ubuntu-MySQL-VirtualBox:~$ 
+student@Ubuntu-MySQL-VirtualBox:~$ hostname
+Ubuntu-MySQL-VirtualBox
+student@Ubuntu-MySQL-VirtualBox:~$ 
+student@Ubuntu-MySQL-VirtualBox:~$ hostname -I
+192.168.1.124 
+student@Ubuntu-MySQL-VirtualBox:~$ hostname -i
+127.0.1.1
+student@Ubuntu-MySQL-VirtualBox:~$ ssh student@192.168.1.124
+The authenticity of host '192.168.1.124 (192.168.1.124)' can't be established.
+ECDSA key fingerprint is SHA256:7qWPIG+If3sr44sVZY7eK6L29Fe93eiVkSRpR+8tp+Y.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.1.124' (ECDSA) to the list of known hosts.
+student@192.168.1.124's password: 
+Welcome to Ubuntu 16.04.7 LTS (GNU/Linux 4.15.0-142-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+UA Infra: Extended Security Maintenance (ESM) is not enabled.
+
+2 updates can be applied immediately.
+1 of these updates is a standard security update.
+To see these additional updates run: apt list --upgradable
+
+13 additional security updates can be applied with UA Infra: ESM
+Learn more about enabling UA Infra: ESM service at https://ubuntu.com/esm
+
+*** System restart required ***
+Last login: Mon May 10 22:59:13 2021 from fe80::d129:1f8b:3adc:8d4b%enp0s3
+student@Ubuntu-MySQL-VirtualBox:~$ sudo nano /etc/ssh/sshd_config
+[sudo] пароль для student: 
+student@Ubuntu-MySQL-VirtualBox:~$ systemctl restart sshd
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Чтобы перезапустить «ssh.service», необходимо пройти аутентификацию.
+Multiple identities can be used for authentication:
+ 1.  student,,, (student)
+ 2.  user1
+Choose identity to authenticate as (1-2): 1
+Password: Failed to restart sshd.service: Время ожидания соединения истекло
+See system logs and 'systemctl status sshd.service' for details.
+student@Ubuntu-MySQL-VirtualBox:~$ polkit-agent-helper-1: pam_authenticate failed: Authentication failure
+student@Ubuntu-MySQL-VirtualBox:~$ sysysayasyuf: команда не найдена
+student@Ubuntu-MySQL-VirtualBox:~$ systemctl reload sshd
+student@Ubuntu-MySQL-VirtualBox:~$ cat new_file
+cat: new_file: Нет такого файла или каталога
+student@Ubuntu-MySQL-VirtualBox:~$ cat file_name
+1
+2
+3
+4
+5
+student@Ubuntu-MySQL-VirtualBox:~$ 
+student@Ubuntu-MySQL-VirtualBox:~$ 
+student@Ubuntu-MySQL-VirtualBox:~$ ps aux | grep mc
+student   2154  0.0  0.4  63276  8460 pts/0    S+   19:29   0:00 mc
+student   2378  0.0  0.0  15472   928 pts/17   S+   19:30   0:00 grep --color=auto mc
+student@Ubuntu-MySQL-VirtualBox:~$ kill -s 9 63276
+bash: kill: (63276) - Нет такого процесса
+student@Ubuntu-MySQL-VirtualBox:~$ kill -s 9 8460
+bash: kill: (8460) - Нет такого процесса
+student@Ubuntu-MySQL-VirtualBox:~$ kill -s 9 2154
+student@Ubuntu-MySQL-VirtualBox:~$ ps aux | grep mc
+student   2384  0.0  0.0  15472   932 pts/17   S+   19:31   0:00 grep --color=auto mc
+student@Ubuntu-MySQL-VirtualBox:~$ 
