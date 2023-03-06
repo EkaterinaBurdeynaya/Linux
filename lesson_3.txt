@@ -1,0 +1,159 @@
+1. Управление пользователями:
+a) создать нового пользователя;
+b) убедиться, что информация о нем появилась в соответствующих файлах в системе;
+c) удалить созданного пользователя;
+
+2. Управление группами:
+a) создать группу;
+b) попрактиковаться в смене групп у пользователей;
+c) добавить пользователя в группу, не меняя основной;
+d) удалить пользователя из группы.
+
+3. Создать пользователя с правами суперпользователя. Проверить результат.
+4. * Используя дополнительные материалы, выдать одному из созданных пользователей право на выполнение ряда команд, требующих прав суперпользователя (команды выбираем на своё усмотрение).
+
+pulse:x:117:124:PulseAudio daemon,,,:/var/run/pulse:/bin/false
+rtkit:x:118:126:RealtimeKit,,,:/proc:/bin/false
+saned:x:119:127::/var/lib/saned:/bin/false
+usbmux:x:120:46:usbmux daemon,,,:/var/lib/usbmux:/bin/false
+student:x:1000:1000:student,,,:/home/student:/bin/bash
+vboxadd:x:999:1::/var/run/vboxadd:/bin/false
+mysql:x:121:129:MySQL Server,,,:/nonexistent:/bin/false
+sshd:x:122:65534::/var/run/sshd:/usr/sbin/nologin
+user1:x:1001:1001::/home/user1:/bin/bash
+student@Ubuntu-MySQL-VirtualBox:~$ cat /etc/passwd | grep ^user
+user1:x:1001:1001::/home/user1:/bin/bash
+student@Ubuntu-MySQL-VirtualBox:~$ sudo userdel -f user1
+student@Ubuntu-MySQL-VirtualBox:~$ cat /etc/passwd | grep ^user
+student@Ubuntu-MySQL-VirtualBox:~$ groupadd dev_team
+groupadd: Permission denied.
+groupadd: не удалось заблокировать /etc/group; попробуйте ещё раз позже.
+student@Ubuntu-MySQL-VirtualBox:~$ sudo groupadd dev_team
+student@Ubuntu-MySQL-VirtualBox:~$ cat /etc/group | grep ^dev
+dev_team:x:1001:
+student@Ubuntu-MySQL-VirtualBox:~$ sudo useradd -m -s /bin/bash user1
+useradd: предупреждение: домашний каталог уже существует.
+Никакие файлы из каталога шаблонов копироваться не будут.
+student@Ubuntu-MySQL-VirtualBox:~$ clear
+
+student@Ubuntu-MySQL-VirtualBox:~$ sudo passwd user1
+Введите новый пароль UNIX: 
+Повторите ввод нового пароля UNIX: 
+passwd: пароль успешно обновлён
+student@Ubuntu-MySQL-VirtualBox:~$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false
+systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false
+systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false
+syslog:x:104:108::/home/syslog:/bin/false
+_apt:x:105:65534::/nonexistent:/bin/false
+messagebus:x:106:110::/var/run/dbus:/bin/false
+uuidd:x:107:111::/run/uuidd:/bin/false
+lightdm:x:108:114:Light Display Manager:/var/lib/lightdm:/bin/false
+whoopsie:x:109:117::/nonexistent:/bin/false
+avahi-autoipd:x:110:119:Avahi autoip daemon,,,:/var/lib/avahi-autoipd:/bin/false
+avahi:x:111:120:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/bin/false
+dnsmasq:x:112:65534:dnsmasq,,,:/var/lib/misc:/bin/false
+colord:x:113:123:colord colour management daemon,,,:/var/lib/colord:/bin/false
+speech-dispatcher:x:114:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false
+hplip:x:115:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+kernoops:x:116:65534:Kernel Oops Tracking Daemon,,,:/:/bin/false
+pulse:x:117:124:PulseAudio daemon,,,:/var/run/pulse:/bin/false
+rtkit:x:118:126:RealtimeKit,,,:/proc:/bin/false
+saned:x:119:127::/var/lib/saned:/bin/false
+usbmux:x:120:46:usbmux daemon,,,:/var/lib/usbmux:/bin/false
+student:x:1000:1000:student,,,:/home/student:/bin/bash
+vboxadd:x:999:1::/var/run/vboxadd:/bin/false
+mysql:x:121:129:MySQL Server,,,:/nonexistent:/bin/false
+sshd:x:122:65534::/var/run/sshd:/usr/sbin/nologin
+user1:x:1001:1002::/home/user1:/bin/bash
+student@Ubuntu-MySQL-VirtualBox:~$ sudo usermod -G dev_team user1
+student@Ubuntu-MySQL-VirtualBox:~$ cat /etc/passwd | grep ^user
+user1:x:1001:1002::/home/user1:/bin/bash
+student@Ubuntu-MySQL-VirtualBox:~$ groups
+student adm cdrom sudo dip plugdev lpadmin sambashare
+student@Ubuntu-MySQL-VirtualBox:~$ su user1
+Пароль: 
+user1@Ubuntu-MySQL-VirtualBox:/home/student$ groups
+user1 dev_team
+user1@Ubuntu-MySQL-VirtualBox:/home/student$ newgrp dev_team
+user1@Ubuntu-MySQL-VirtualBox:/home/student$ groups
+dev_team user1
+user1@Ubuntu-MySQL-VirtualBox:/home/student$ sudo gpasswd -d user1 user1
+[sudo] пароль для user1: 
+user1 отсутствует в файле sudoers. Данное действие будет занесено в журнал.
+user1@Ubuntu-MySQL-VirtualBox:/home/student$ su student
+Пароль: 
+student@Ubuntu-MySQL-VirtualBox:~$ sudo passwd -d user1 user1
+Использование: passwd [параметры] [ПОЛЬЗОВАТЕЛЬ]
+
+Параметры:
+  -a, --all                     показать состояние паролей всех учётных
+                                записей
+  -d, --delete                  удалить пароль заданной учётной записи
+  -e, --expire                  просрочить пароль заданной учётной записи
+  -h, --help                    показать данное сообщение и закончить работу
+  -k, --keep-tokens             изменять пароль только с истёкшим сроком
+                                действия
+  -i, --inactive НЕАКТИВНОСТЬ   установить неактивность пароля после
+                                истечения срока в значение НЕАКТИВНОСТЬ
+  -l, --lock                    заблокировать заданную учётную запись
+  -n, --mindays МИН_ДНЕЙ        установить минимальное число дней перед
+                                сменой пароля в МИН_ДНЕЙ
+  -q, --quiet                   сократить количество выводимых сообщений
+  -r, --repository РЕПОЗИТОРИЙ  изменить пароль в РЕПОЗИТОРИИ
+  -R, --root КАТ_CHROOT         каталог, в который выполняется chroot
+  -S, --status                  показать состояние пароля заданной учётной
+                                записи
+  -u, --unlock                  разблокировать заданную учётную запись
+  -w, --warndays ПРЕДУП_ДНЕЙ    установить количество дней с
+                                выдачей предупреждения в ПРЕДУП_ДНЕЙ
+  -x, --maxdays МАКС_ДНЕЙ       установить максимальное число дней перед
+                                сменой пароля в МАКС_ДНЕЙ
+
+student@Ubuntu-MySQL-VirtualBox:~$ sudo gpasswd -d user1 user1
+Удаление пользователя user1 из группы user1
+gpasswd: пользователь «user1» не является членом «user1»
+student@Ubuntu-MySQL-VirtualBox:~$ sudo gpasswd -d user1 dev_team
+Удаление пользователя user1 из группы dev_team
+student@Ubuntu-MySQL-VirtualBox:~$ sudo usermod -G sudo user1
+student@Ubuntu-MySQL-VirtualBox:~$ su user1
+Пароль: 
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+user1@Ubuntu-MySQL-VirtualBox:/home/student$ chmod r+w+x mciri_poem.txt 
+chmod: неверный режим: «r+w+x»
+По команде «chmod --help» можно получить дополнительную информацию.
+user1@Ubuntu-MySQL-VirtualBox:/home/student$ chmod u=r+w+x mciri_poem.txt 
+chmod: изменение прав доступа для 'mciri_poem.txt': Операция не позволена
+user1@Ubuntu-MySQL-VirtualBox:/home/student$ sudo chmod u=r+w+x mciri_poem.txt 
+[sudo] пароль для user1: 
+user1@Ubuntu-MySQL-VirtualBox:/home/student$ history
+    1  chmod r+w+x mciri_poem.txt 
+    2  chmod u=r+w+x mciri_poem.txt 
+    3  sudo chmod u=r+w+x mciri_poem.txt 
+    4  history
+user1@Ubuntu-MySQL-VirtualBox:/home/student$ su student
+Пароль: 
+student@Ubuntu-MySQL-VirtualBox:~$ history
+
+У МЕНЯ ПОЧЕМУ-ТО ПРОПАЛО ТО, ЧТО Я ПИСАЛА ДО ЭТОГО В ТЕРМИНАЛЕ, ПОДСКАЖИТЕ КАК ВЕРНУТЬ ИЛИ УБРАТЬ ОГРАНИЧЕНИЕ НА КОЛ-ВО СТРОК
